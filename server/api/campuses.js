@@ -4,8 +4,8 @@ const router = require('express').Router();
 
 router.get('/', async (req,res,next) => {
     try {
-        const campuses = await Campus.findAll()
-        res.send(campuses)
+        const campuses = await Campus.findAll();
+        res.send(campuses);
     } catch (err) {
         next(err)
     }
@@ -18,10 +18,21 @@ router.get('/:id', async (req,res,next) => {
                 model: Student
             }
         });
-        res.send(campus)
+        res.send(campus);
     } catch (err) {
         next(err)
     }
 })
 
-module.exports = router
+router.post('/', async (req,res,next) => {
+    try {
+        // maybe should make this a find or create, if later want campuses to have unique names?
+        console.log('logging req.body', req.body)
+        // console.log('\n\nloggin req\n\n',req)
+        res.status(201).send(await Campus.create(req.body));
+    } catch (err) {
+        next(err)
+    }
+})
+
+module.exports = router;

@@ -22,10 +22,6 @@ const Campus = db.define('campus', {
     },
     description: {
         type: Sequelize.TEXT,
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
     },
 })
 

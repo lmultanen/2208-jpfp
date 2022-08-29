@@ -10,3 +10,17 @@ nav {
 .menu-link {
     margin: 5px;
 }
+
+#list-form-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 2em
+}
+
+/* #form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 1em;
+} */

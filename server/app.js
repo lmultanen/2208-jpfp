@@ -11,7 +11,9 @@ app.use(cors())
 app.use(volleyball)
 
 //this is where some things should go
+app.use(express.json())
 app.use('/api', require('./api'))
+
 
 
 // will want to modify this; maybe do a straight up redirect
