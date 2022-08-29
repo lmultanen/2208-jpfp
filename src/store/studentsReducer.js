@@ -1,4 +1,5 @@
 import axios from "axios";
+import { updateSingleStudent } from "./singleStudentReducer";
 
 const SET_STUDENTS = 'SET_STUDENTS';
 const CREATE_STUDENT = 'CREATE_STUDENT';
@@ -42,10 +43,14 @@ export const deleteStudent = (id) => {
         dispatch(_deleteStudent(student))
     }
 }
-export const updateStudent = (student) => {
+export const updateStudent = (student, campus) => {
     return async (dispatch) => {
-        const {data: updated} = await axios.put(`/api/students/${student.id}`, student)
+        const {data: updated} = await axios.put(`/api/students/${student.id}`, {
+            student: student,
+            campus: campus
+        })
         dispatch(_updateStudent(updated))
+        dispatch(updateSingleStudent(updated))
     }
 }
 

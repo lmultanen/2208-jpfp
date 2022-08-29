@@ -35,8 +35,21 @@ router.delete('/:id', async (req,res,next) => {
 
 router.put('/:id', async (req,res,next) => {
     try {
-        const student = await Student.findByPk(req.params.id);
-        res.send(await student.update(req.body));
+        const student = await Student.findByPk(req.params.id, {
+            include: {
+                model: Campus
+            }
+        });
+        await student.update(req.body.student)
+        //not efficient always resetting here; could write out some conditions
+        if (req.body.campus) {
+            const campus = await Campus.findByPk(req.body.campus.id);
+            // console.log('logging new campus and id,', campus, campus.id)
+            await student.setCampus(campus)
+            // console.log('logging updated student model,', student)
+        }
+        // await student.setCampus(req.body.campus)
+        res.send(student);
     } catch (err) {
         next(err)
     }

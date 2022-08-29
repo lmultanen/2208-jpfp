@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
+import { fetchCampuses } from "../store/campusesReducer";
 import { fetchSingleStudent, unmountSingleStudent } from "../store/singleStudentReducer";
 import UpdateStudentForm from "./UpdateStudentForm";
 
@@ -26,11 +27,11 @@ const SingleStudent = () => {
                 <div>{'Email: ' + student.email}</div>
                 <div>{'GPA: ' + (student.gpa ? student.gpa : 'N/A')}</div>
                 {/* <div>{'Campus: ' + (student.campusId ? <Link to={`/campuses/${student.campusId}`}>{student.campus.name}</Link> : "Not currently enrolled!")}</div> */}
-                {student.campusId ?
+                {student.campusId && student.campus ?
                     <div>{'Campus: '}
-                        <Link to={`/campuses/${student.campusId}`}>{student.campus.name}</Link>
+                        <Link to={`/campuses/${student.campus.id}`}>{student.campus.name}</Link>
                     </div>
-                    : <div>Campus: Not currently Enrolled</div>
+                    : <div>Campus: Not enrolled</div>
                 }
             </div>
             <div id='update-student-form'>

@@ -8,7 +8,7 @@ import AllStudents from "./components/AllStudents";
 
 
 function App(){
-
+    
     return(
         <>  
             <nav> Menu
