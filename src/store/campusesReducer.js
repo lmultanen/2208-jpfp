@@ -21,6 +21,6 @@ export default (state = [], action) => {
         case SET_CAMPUSES:
             return action.campuses;
         default:
-            return state
+            return state;
     }
 }

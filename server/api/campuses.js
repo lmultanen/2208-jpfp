@@ -1,4 +1,4 @@
-const { Campus } = require('../db');
+const { Campus, Student } = require('../db');
 
 const router = require('express').Router();
 
@@ -6,6 +6,19 @@ router.get('/', async (req,res,next) => {
     try {
         const campuses = await Campus.findAll()
         res.send(campuses)
+    } catch (err) {
+        next(err)
+    }
+})
+
+router.get('/:id', async (req,res,next) => {
+    try {
+        const campus = await Campus.findByPk(req.params.id, {
+            include: {
+                model: Student
+            }
+        });
+        res.send(campus)
     } catch (err) {
         next(err)
     }

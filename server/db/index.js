@@ -21,13 +21,13 @@ const seedStudents = [{
   firstName: 'Luke',
   lastName: 'Multanen',
   email: 'luke@luke.com',
-  imageUrl: 'test',
+  imageUrl: 'https://iio.azcast.arizona.edu/sites/default/files/profile-blank-whitebg.png',
   gpa: 3.5
 }, {
   firstName: 'Lisa',
   lastName: 'Zhu',
   email: 'lisa@baby.com',
-  imageUrl: 'test',
+  imageUrl: 'https://iio.azcast.arizona.edu/sites/default/files/profile-blank-whitebg.png',
   gpa: 3.8
 }]
 
@@ -44,6 +44,12 @@ const syncAndSeed = async () => {
     await Promise.all(seedCampuses.map(campus => {
       return Campus.create(campus);
     }));
+
+    //testing setting first student campus
+    const firstStudent = await Student.findByPk(1);
+    const firstCampus = await Campus.findByPk(2);
+    await firstStudent.setCampus(firstCampus)
+
 
     console.log(`
     Seeding successful!
