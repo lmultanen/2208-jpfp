@@ -45,8 +45,7 @@ export default (state = [], action) => {
         case CREATE_STUDENT:
             return [...state, action.student]
         case DELETE_STUDENT:
-            let filtered = state.filter(student => student.id !== action.student.id)
-            return filtered;
+            return state.filter(student => student.id !== action.student.id)
         default:
             return state
     }

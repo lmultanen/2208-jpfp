@@ -2581,11 +2581,16 @@ var Campuses = function Campuses() {
       key: idx
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
       to: "/campuses/".concat(campus.id)
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, campus.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, campus.name, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
       src: campus.imageUrl,
       height: "150px",
       width: "150px"
-    })));
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+      className: "delete",
+      onClick: function onClick() {
+        return dispatch((0,_store_campusesReducer__WEBPACK_IMPORTED_MODULE_2__.deleteCampus)(campus.id));
+      }
+    }, "X")));
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "campus-form"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_NewCampusForm__WEBPACK_IMPORTED_MODULE_3__["default"], null)));
@@ -3053,6 +3058,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "createCampus": () => (/* binding */ createCampus),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "deleteCampus": () => (/* binding */ deleteCampus),
 /* harmony export */   "fetchCampuses": () => (/* binding */ fetchCampuses)
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
@@ -3079,7 +3085,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 var SET_CAMPUSES = 'SET_CAMPUSES';
-var CREATE_CAMPUS = 'CREATE_CAMPUS'; //action creators
+var CREATE_CAMPUS = 'CREATE_CAMPUS';
+var DELETE_CAMPUS = 'DELETE_CAMPUS'; //action creators
 
 var _setCampuses = function _setCampuses(campuses) {
   return {
@@ -3091,6 +3098,13 @@ var _setCampuses = function _setCampuses(campuses) {
 var _createCampus = function _createCampus(campus) {
   return {
     type: CREATE_CAMPUS,
+    campus: campus
+  };
+};
+
+var _deleteCampus = function _deleteCampus(campus) {
+  return {
+    type: DELETE_CAMPUS,
     campus: campus
   };
 }; //thunks
@@ -3156,6 +3170,36 @@ var createCampus = function createCampus(campus) {
     };
   }();
 };
+var deleteCampus = function deleteCampus(id) {
+  return /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(dispatch) {
+      var _yield$axios$delete, campus;
+
+      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"]("/api/campuses/".concat(id));
+
+            case 2:
+              _yield$axios$delete = _context3.sent;
+              campus = _yield$axios$delete.data;
+              dispatch(_deleteCampus(campus));
+
+            case 5:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }));
+
+    return function (_x3) {
+      return _ref3.apply(this, arguments);
+    };
+  }();
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments.length > 1 ? arguments[1] : undefined;
@@ -3166,6 +3210,11 @@ var createCampus = function createCampus(campus) {
 
     case CREATE_CAMPUS:
       return [].concat(_toConsumableArray(state), [action.campus]);
+
+    case DELETE_CAMPUS:
+      return state.filter(function (campus) {
+        return campus.id !== action.campus.id;
+      });
 
     default:
       return state;
@@ -3571,10 +3620,9 @@ var deleteStudent = function deleteStudent(id) {
       return [].concat(_toConsumableArray(state), [action.student]);
 
     case DELETE_STUDENT:
-      var filtered = state.filter(function (student) {
+      return state.filter(function (student) {
         return student.id !== action.student.id;
       });
-      return filtered;
 
     default:
       return state;

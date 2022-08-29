@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const SET_CAMPUSES = 'SET_CAMPUSES';
-const CREATE_CAMPUS = 'CREATE_CAMPUS'
+const CREATE_CAMPUS = 'CREATE_CAMPUS';
+const DELETE_CAMPUS = 'DELETE_CAMPUS';
 
 //action creators
 const _setCampuses = (campuses) => ({
@@ -10,6 +11,10 @@ const _setCampuses = (campuses) => ({
 })
 const _createCampus = (campus) => ({
     type: CREATE_CAMPUS,
+    campus
+})
+const _deleteCampus = (campus) => ({
+    type: DELETE_CAMPUS,
     campus
 })
 
@@ -26,6 +31,12 @@ export const createCampus = (campus) => {
         dispatch(_createCampus(newCampus))
     }
 }
+export const deleteCampus = (id) => {
+    return async (dispatch) => {
+        const {data: campus} = await axios.delete(`/api/campuses/${id}`)
+        dispatch(_deleteCampus(campus))
+    }
+}
 
 export default (state = [], action) => {
     switch (action.type) {
@@ -33,6 +44,8 @@ export default (state = [], action) => {
             return action.campuses;
         case CREATE_CAMPUS:
             return [...state, action.campus]
+        case DELETE_CAMPUS:
+            return state.filter(campus => campus.id !== action.campus.id)
         default:
             return state;
     }

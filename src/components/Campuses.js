@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchCampuses } from "../store/campusesReducer";
+import { deleteCampus, fetchCampuses } from "../store/campusesReducer";
 import NewCampusForm from "./NewCampusForm";
 
 const Campuses = () => {
@@ -20,9 +20,12 @@ const Campuses = () => {
                     return(
                     <div className="campus" key={idx}>
                         <Link to={`/campuses/${campus.id}`}>
-                            <h3>{campus.name}</h3>
+                            <h3>{campus.name} </h3>
                             <img src={campus.imageUrl} height='150px' width='150px'/>
                         </Link>
+                        <span>
+                            <button className="delete" onClick={() => dispatch(deleteCampus(campus.id))}>X</button>
+                        </span>
                     </div>
                     )
                 })}
