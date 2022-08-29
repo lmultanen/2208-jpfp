@@ -1,10 +1,10 @@
 import React from "react";
 import { NavLink, Route, Routes } from "react-router-dom";
-import Campuses from "./components/Campuses";
+import AllCampuses from "./components/AllCampuses";
 import Home from "./components/Home";
 import SingleCampus from "./components/SingleCampus";
 import SingleStudent from "./components/SingleStudent";
-import Students from "./components/Students";
+import AllStudents from "./components/AllStudents";
 
 
 function App(){
@@ -33,8 +33,8 @@ function App(){
             </nav>
             <Routes>
                 <Route index element ={<Home/>}/>
-                <Route path='/campuses' element={<Campuses/>}/>
-                <Route path='/students' element={<Students/>}/>
+                <Route path='/campuses' element={<AllCampuses/>}/>
+                <Route path='/students' element={<AllStudents/>}/>
                 <Route path='/students/:id' element={<SingleStudent/>}/>
                 <Route path='/campuses/:id' element={<SingleCampus/>}/>
             </Routes>

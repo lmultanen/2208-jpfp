@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { deleteCampus, fetchCampuses } from "../store/campusesReducer";
 import NewCampusForm from "./NewCampusForm";
 
-const Campuses = () => {
+const AllCampuses = () => {
     const dispatch = useDispatch();
     const campuses = useSelector(state => state.campuses)
 
@@ -37,4 +37,4 @@ const Campuses = () => {
     )
 }
 
-export default Campuses;
+export default AllCampuses;

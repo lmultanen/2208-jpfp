@@ -4,7 +4,7 @@ import { deleteStudent, fetchStudents } from "../store/studentsReducer";
 import { Link } from "react-router-dom";
 import NewStudentForm from "./NewStudentForm";
 
-const Students = () => {
+const AllStudents = () => {
     const dispatch = useDispatch()
     const students = useSelector(state => state.students)
 
@@ -38,4 +38,4 @@ const Students = () => {
     )
 }
 
-export default Students;
+export default AllStudents;
