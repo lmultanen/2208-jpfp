@@ -2852,8 +2852,7 @@ var NewStudentForm = function NewStudentForm() {
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_0___default().useState(blankForm),
       _React$useState2 = _slicedToArray(_React$useState, 2),
       form = _React$useState2[0],
-      setForm = _React$useState2[1]; //write handleSubmit after setting up backend
-
+      setForm = _React$useState2[1];
 
   var handleSubmit = function handleSubmit(event) {
     event.preventDefault();
@@ -3009,9 +3008,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
 /* harmony import */ var _store_singleStudentReducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/singleStudentReducer */ "./src/store/singleStudentReducer.js");
+/* harmony import */ var _UpdateStudentForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./UpdateStudentForm */ "./src/components/UpdateStudentForm.js");
+
 
 
 
@@ -3022,7 +3023,7 @@ var SingleStudent = function SingleStudent() {
   var student = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
     return state.singleStudent;
   });
-  var params = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useParams)();
+  var params = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useParams)();
   react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
     dispatch((0,_store_singleStudentReducer__WEBPACK_IMPORTED_MODULE_2__.fetchSingleStudent)(params.id));
     return function () {
@@ -3032,18 +3033,167 @@ var SingleStudent = function SingleStudent() {
   // also prevents undefined fields if student doesn't exist; will handle that case later
 
   return student.firstName ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    id: "single-student"
+    id: "single-student-container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    id: "student-info"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, student.firstName + ' ' + student.lastName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: student.imageUrl,
     height: "200px",
     width: "200px"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, 'Email: ' + student.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, 'GPA: ' + (student.gpa ? student.gpa : 'N/A')), student.campusId ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, 'Campus: ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, 'Email: ' + student.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, 'GPA: ' + (student.gpa ? student.gpa : 'N/A')), student.campusId ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, 'Campus: ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
     to: "/campuses/".concat(student.campusId)
-  }, student.campus.name)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Campus: Not currently Enrolled")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null); // should put a navlink/link in the campus ternary statement
+  }, student.campus.name)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Campus: Not currently Enrolled")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    id: "update-student-form"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_UpdateStudentForm__WEBPACK_IMPORTED_MODULE_3__["default"], null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null); // should put a navlink/link in the campus ternary statement
   // can probably put student info in some sort of flex box container
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SingleStudent);
+
+/***/ }),
+
+/***/ "./src/components/UpdateStudentForm.js":
+/*!*********************************************!*\
+  !*** ./src/components/UpdateStudentForm.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var _store_singleStudentReducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/singleStudentReducer */ "./src/store/singleStudentReducer.js");
+/* harmony import */ var _store_studentsReducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/studentsReducer */ "./src/store/studentsReducer.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+var UpdateStudentForm = function UpdateStudentForm() {
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
+  var params = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useParams)();
+
+  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0___default().useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    imageUrl: '',
+    gpa: 0
+  }),
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      form = _React$useState2[0],
+      setForm = _React$useState2[1];
+
+  var student = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
+    return state.singleStudent;
+  });
+  react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
+    //duplicating code with SingleStudent component; probably unneccessary
+    //don't think I need to unmount though, since SingleStudent already taking care of that
+    dispatch((0,_store_singleStudentReducer__WEBPACK_IMPORTED_MODULE_2__.fetchSingleStudent)(params.id));
+    setForm(student);
+  }, [student.firstName]); //maybe should look at the todos solution code for how to properly edit
+  //does it make more sense to have updateStudent be in the singleStudentReducer?
+
+  var handleSubmit = function handleSubmit(event) {
+    event.preventDefault();
+
+    var submissionForm = _objectSpread({}, form); // may need to change this later
+
+
+    submissionForm.gpa = Number(submissionForm.gpa);
+    dispatch((0,_store_singleStudentReducer__WEBPACK_IMPORTED_MODULE_2__.updateSingleStudent)(submissionForm));
+    dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_3__.updateStudent)(submissionForm));
+  };
+
+  var handleChange = function handleChange(props) {
+    return function (event) {
+      setForm(_objectSpread(_objectSpread({}, form), {}, _defineProperty({}, props, event.target.value)));
+    };
+  };
+
+  var checkDisabled = function checkDisabled() {
+    return !form.lastName.length || !form.firstName.length || !form.email.length;
+  };
+
+  return student.firstName ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    id: "form-container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Update Student Information:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
+    id: "student-form",
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "firstName"
+  }, "First Name", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: "warning"
+  }, form.firstName.length ? '' : 'Field required')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    name: "firstName",
+    value: form.firstName,
+    onChange: handleChange('firstName')
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "lastName"
+  }, "Last Name", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: "warning"
+  }, form.lastName.length ? '' : 'Field required')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    name: "lastName",
+    value: form.lastName,
+    onChange: handleChange('lastName')
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "email"
+  }, "Email", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: "warning"
+  }, form.email.length ? '' : 'Field required')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    name: "email",
+    value: form.email,
+    type: "email",
+    onChange: handleChange('email')
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "imageUrl"
+  }, "Student Picture Url"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    name: "imageUrl",
+    value: form.imageUrl,
+    type: "url",
+    onChange: handleChange('imageUrl')
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "gpa"
+  }, "GPA"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    name: "gpa",
+    value: form.gpa,
+    type: "number",
+    step: "0.01",
+    min: "0.0",
+    max: "4.0",
+    onChange: handleChange('gpa')
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    type: "submit",
+    disabled: checkDisabled()
+  }, "Update Student"))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null);
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (UpdateStudentForm);
 
 /***/ }),
 
@@ -3371,7 +3521,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
 /* harmony export */   "fetchSingleStudent": () => (/* binding */ fetchSingleStudent),
-/* harmony export */   "unmountSingleStudent": () => (/* binding */ unmountSingleStudent)
+/* harmony export */   "unmountSingleStudent": () => (/* binding */ unmountSingleStudent),
+/* harmony export */   "updateSingleStudent": () => (/* binding */ updateSingleStudent)
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
@@ -3385,7 +3536,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 var SET_SINGLE_STUDENT = 'SET_SINGLE_STUDENT';
-var UNMOUNT_SINGLE_STUDENT = 'UNMOUNT_SINGLE_STUDENT'; //action creators
+var UNMOUNT_SINGLE_STUDENT = 'UNMOUNT_SINGLE_STUDENT';
+var UPDATE_SINGLE_STUDENT = 'UPDATE_SINGLE_STUDENT'; //action creators
 
 var _setSingleStudent = function _setSingleStudent(student) {
   return {
@@ -3397,6 +3549,13 @@ var _setSingleStudent = function _setSingleStudent(student) {
 var _unmountSingleStudent = function _unmountSingleStudent(student) {
   return {
     type: UNMOUNT_SINGLE_STUDENT,
+    student: student
+  };
+};
+
+var _updateSingleStudent = function _updateSingleStudent(student) {
+  return {
+    type: UPDATE_SINGLE_STUDENT,
     student: student
   };
 }; //thunks
@@ -3437,6 +3596,12 @@ var unmountSingleStudent = function unmountSingleStudent() {
     dispatch(_unmountSingleStudent({}));
   };
 };
+var updateSingleStudent = function updateSingleStudent(student) {
+  return function (dispatch) {
+    // const {data: updated} = await axios.put(`/api/students/${student.id}`)
+    dispatch(_updateSingleStudent(student));
+  };
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
@@ -3446,6 +3611,9 @@ var unmountSingleStudent = function unmountSingleStudent() {
       return action.student;
 
     case UNMOUNT_SINGLE_STUDENT:
+      return action.student;
+
+    case UPDATE_SINGLE_STUDENT:
       return action.student;
 
     default:
@@ -3467,7 +3635,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "createStudent": () => (/* binding */ createStudent),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
 /* harmony export */   "deleteStudent": () => (/* binding */ deleteStudent),
-/* harmony export */   "fetchStudents": () => (/* binding */ fetchStudents)
+/* harmony export */   "fetchStudents": () => (/* binding */ fetchStudents),
+/* harmony export */   "updateStudent": () => (/* binding */ updateStudent)
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
@@ -3494,7 +3663,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var SET_STUDENTS = 'SET_STUDENTS';
 var CREATE_STUDENT = 'CREATE_STUDENT';
-var DELETE_STUDENT = 'DELETE_STUDENT'; //action creators
+var DELETE_STUDENT = 'DELETE_STUDENT';
+var UPDATE_STUDENT = 'UPDATE_STUDENT'; //action creators
 
 var _setStudents = function _setStudents(students) {
   return {
@@ -3513,6 +3683,13 @@ var _createStudent = function _createStudent(student) {
 var _deleteStudent = function _deleteStudent(student) {
   return {
     type: DELETE_STUDENT,
+    student: student
+  };
+};
+
+var _updateStudent = function _updateStudent(student) {
+  return {
+    type: UPDATE_STUDENT,
     student: student
   };
 }; //thunks
@@ -3608,6 +3785,36 @@ var deleteStudent = function deleteStudent(id) {
     };
   }();
 };
+var updateStudent = function updateStudent(student) {
+  return /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(dispatch) {
+      var _yield$axios$put, updated;
+
+      return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              _context4.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().put("/api/students/".concat(student.id), student);
+
+            case 2:
+              _yield$axios$put = _context4.sent;
+              updated = _yield$axios$put.data;
+              dispatch(_updateStudent(updated));
+
+            case 5:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4);
+    }));
+
+    return function (_x4) {
+      return _ref4.apply(this, arguments);
+    };
+  }();
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments.length > 1 ? arguments[1] : undefined;
@@ -3622,6 +3829,11 @@ var deleteStudent = function deleteStudent(id) {
     case DELETE_STUDENT:
       return state.filter(function (student) {
         return student.id !== action.student.id;
+      });
+
+    case UPDATE_STUDENT:
+      return state.map(function (student) {
+        return student.id === action.student.id ? action.student : student;
       });
 
     default:

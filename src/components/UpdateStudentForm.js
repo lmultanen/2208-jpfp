@@ -1,27 +1,38 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { createStudent } from "../store/studentsReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { fetchSingleStudent, updateSingleStudent} from "../store/singleStudentReducer";
+import { updateStudent } from "../store/studentsReducer";
 
-const NewStudentForm = () => {
+const UpdateStudentForm = () => {
     const dispatch = useDispatch();
+    const params = useParams();
 
-    const blankForm = {
+    const [form, setForm] = React.useState({
         firstName: '',
         lastName: '',
-        imageUrl: '',
         email: '',
-        gpa: 0.0
-    }
+        imageUrl: '',
+        gpa: 0
+    })
+    const student = useSelector(state => state.singleStudent)
 
-    const [form, setForm] = React.useState(blankForm);
+    React.useEffect(() => {
+        //duplicating code with SingleStudent component; probably unneccessary
+        //don't think I need to unmount though, since SingleStudent already taking care of that
+        dispatch(fetchSingleStudent(params.id));
+        setForm(student);
+    },[student.firstName])
+    //maybe should look at the todos solution code for how to properly edit
 
+    //does it make more sense to have updateStudent be in the singleStudentReducer?
     const handleSubmit = (event) => {
         event.preventDefault();
-        let submissionForm = removeEmptyProps();
+        let submissionForm = {...form};
         // may need to change this later
         submissionForm.gpa = Number(submissionForm.gpa)
-        dispatch(createStudent(submissionForm));
-        setForm(blankForm)
+        dispatch(updateSingleStudent(submissionForm));
+        dispatch(updateStudent(submissionForm))
     }
 
     const handleChange = props => event => {
@@ -31,23 +42,13 @@ const NewStudentForm = () => {
         })
     }
 
-    const removeEmptyProps = () => {
-        let newForm = {};
-        Object.keys(form).forEach(key => {
-            if (form[key].length) {
-                newForm[key] = form[key]
-            }
-        })
-        return newForm;
-    }
-
     const checkDisabled = () => {
         return (!form.lastName.length || !form.firstName.length || !form.email.length)
     }
-
-    return(
+    
+    return( student.firstName ?
         <div id='form-container'>
-            <h1>Add New Student Below:</h1>
+            <h1>Update Student Information:</h1>
             <form id='student-form' onSubmit={(handleSubmit)}>
                 <label htmlFor='firstName'>
                     First Name
@@ -73,12 +74,13 @@ const NewStudentForm = () => {
                 <label htmlFor='gpa'>GPA</label>
                 <input name='gpa' value={form.gpa} type='number' step='0.01' min='0.0' max='4.0' onChange={handleChange('gpa')}/>
 
-                <button type='submit' disabled={checkDisabled()}>Create New Student</button>
+                <button type='submit' disabled={checkDisabled()}>Update Student</button>
 
             </form>
-        </div>
+        </div> 
+        : <></>
     )
-
 }
 
-export default NewStudentForm;
+export default UpdateStudentForm;
+
