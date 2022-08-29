@@ -16,8 +16,8 @@ const NewCampusForm = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        let sumbissionForm = removeEmptyProps()
-        dispatch(createCampus(sumbissionForm))
+        let submissionForm = removeEmptyProps()
+        dispatch(createCampus(submissionForm))
         setForm(blankForm);
     }
 
@@ -47,7 +47,10 @@ const NewCampusForm = () => {
         <div id='form-container'>
             <h1>Add New Campus Below:</h1>
             <form id='campus-form' onSubmit={handleSubmit}>
-                <label htmlFor='name'>Campus Name</label>
+                <label htmlFor='name'>
+                    Campus Name
+                    <span className='warning'>{form.name.length ? '' : 'Field required'}</span>
+                </label>
                 <input name='name' value={form.name} onChange={handleChange('name')}/>
 
                 <label htmlFor='imageUrl'>Campus Picture Url</label>
@@ -56,7 +59,10 @@ const NewCampusForm = () => {
                 <label htmlFor='description'>Description</label>
                 <input name='description' value={form.description} onChange={handleChange('description')}/>
 
-                <label htmlFor='address'>Address</label>
+                <label htmlFor='address'>
+                    Address
+                    <span className='warning'>{form.address.length ? '' : 'Field required'}</span>
+                </label>
                 <input name='address' value={form.address} onChange={handleChange('address')}/>
 
                 <button type='submit' disabled={checkDisabled()}>Create New Campus</button>

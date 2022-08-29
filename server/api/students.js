@@ -23,4 +23,13 @@ router.get('/:id', async (req,res,next) => {
     }
 })
 
+router.post('/', async (req,res,next) => {
+    try {
+        // maybe should make this a find or create, if later want campuses to have unique names?
+        res.status(201).send(await Student.create(req.body));
+    } catch (err) {
+        next(err)
+    }
+})
+
 module.exports = router

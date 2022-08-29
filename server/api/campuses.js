@@ -27,8 +27,6 @@ router.get('/:id', async (req,res,next) => {
 router.post('/', async (req,res,next) => {
     try {
         // maybe should make this a find or create, if later want campuses to have unique names?
-        console.log('logging req.body', req.body)
-        // console.log('\n\nloggin req\n\n',req)
         res.status(201).send(await Campus.create(req.body));
     } catch (err) {
         next(err)

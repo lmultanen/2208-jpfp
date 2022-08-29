@@ -20,10 +20,8 @@ export const fetchCampuses = () => {
         dispatch(_setCampuses(campuses))
     }
 }
-
 export const createCampus = (campus) => {
     return async (dispatch) => {
-        console.log('\nLOGGING CAMPUS BEFORE AXIOS POST\n', campus)
         const {data: newCampus} = await axios.post('/api/campuses', campus)
         dispatch(_createCampus(newCampus))
     }
