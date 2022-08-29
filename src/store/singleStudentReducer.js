@@ -17,9 +17,7 @@ const _unmountSingleStudent = student => ({
 //thunks
 export const fetchSingleStudent = (id) => {
     return async (dispatch) => {
-        console.log('logging before await')
         const {data: student} = await axios.get(`/api/students/${id}`);
-        console.log('logging after await')
         dispatch(_setSingleStudent(student))
     }
 }
@@ -33,6 +31,8 @@ export const unmountSingleStudent = () => {
 export default (state = {}, action) => {
     switch (action.type) {
         case SET_SINGLE_STUDENT:
+            return action.student;
+        case UNMOUNT_SINGLE_STUDENT:
             return action.student;
         default:
             return state;

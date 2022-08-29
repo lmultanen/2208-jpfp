@@ -1,15 +1,14 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { fetchSingleStudent, unmountSingleStudent } from "../store/singleStudentReducer";
 
 const SingleStudent = () => {
     const dispatch = useDispatch();
     const student = useSelector(state => state.singleStudent)
-    const params = useParams()
+    const params = useParams();
 
     React.useEffect(() => {
-        console.log('logging before trying to fetch')
         dispatch(fetchSingleStudent(params.id))
         return () => {
             dispatch(unmountSingleStudent())
@@ -24,7 +23,13 @@ const SingleStudent = () => {
             <img src={student.imageUrl} height='200px' width='200px'/>
             <div>{'Email: ' + student.email}</div>
             <div>{'GPA: ' + student.gpa}</div>
-            <div>{'Campus: ' + (student.campusId ? student.campus.name : "Not currently enrolled!")}</div>
+            {/* <div>{'Campus: ' + (student.campusId ? <Link to={`/campuses/${student.campusId}`}>{student.campus.name}</Link> : "Not currently enrolled!")}</div> */}
+            {student.campusId ?
+                <div>{'Campus: '}
+                    <Link to={`/campuses/${student.campusId}`}>{student.campus.name}</Link>
+                </div>
+                : <div>Campus: Not currently Enrolled</div>
+            }
         </div> 
         : <></>
     )

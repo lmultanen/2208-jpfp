@@ -29,6 +29,18 @@ const seedStudents = [{
   email: 'lisa@baby.com',
   imageUrl: 'https://iio.azcast.arizona.edu/sites/default/files/profile-blank-whitebg.png',
   gpa: 3.8
+}, {
+  firstName: 'Jacob',
+  lastName: 'Ryall',
+  email: 'jacob@jacob.com',
+  imageUrl: 'https://iio.azcast.arizona.edu/sites/default/files/profile-blank-whitebg.png',
+  gpa: 3.7
+}, {
+  firstName: 'Some',
+  lastName: 'Dude',
+  email: 'some@dude.com',
+  imageUrl: 'https://iio.azcast.arizona.edu/sites/default/files/profile-blank-whitebg.png',
+  gpa: 3.8
 }]
 
 Student.belongsTo(Campus)
@@ -45,10 +57,20 @@ const syncAndSeed = async () => {
       return Campus.create(campus);
     }));
 
-    //testing setting first student campus
+    //testing setting a few students to campuses
     const firstStudent = await Student.findByPk(1);
-    const firstCampus = await Campus.findByPk(2);
-    await firstStudent.setCampus(firstCampus)
+    const thirdStudent = await Student.findByPk(3);
+    const firstCampus = await Campus.findAll({where: {
+      name: "UChicago"
+    }});
+    await firstStudent.setCampus(firstCampus[0])
+    await thirdStudent.setCampus(firstCampus[0])
+
+    const fourthStudent = await Student.findByPk(4);
+    const secondCampus = await Campus.findAll({where: {
+      name: "Harvard"
+    }});
+    await fourthStudent.setCampus(secondCampus[0])
 
 
     console.log(`
