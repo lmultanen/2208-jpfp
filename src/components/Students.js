@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchStudents } from "../store/studentsReducer";
+import { deleteStudent, fetchStudents } from "../store/studentsReducer";
 import { Link } from "react-router-dom";
 import NewStudentForm from "./NewStudentForm";
 
@@ -20,11 +20,13 @@ const Students = () => {
                 {students.map((student,idx) => {
                     return(
                     <div className="student" key={idx}>
-                        <Link to={`/students/${student.id}`}>
-                            <div className="student-name">
-                                {student.lastName + ', ' + student.firstName}
-                            </div>             
-                        </Link>
+                        <span>
+                            <Link to={`/students/${student.id}`}>
+                                    {student.lastName + ', ' + student.firstName}             
+                            </Link>
+                        
+                            <button className="delete" onClick={() => dispatch(deleteStudent(student.id))}>X</button>
+                        </span>
                     </div>
                     )
                 })}

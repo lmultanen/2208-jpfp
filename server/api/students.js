@@ -23,6 +23,16 @@ router.get('/:id', async (req,res,next) => {
     }
 })
 
+router.delete('/:id', async (req,res,next) => {
+    try {
+        const student = await Student.findByPk(req.params.id);
+        await student.destroy();
+        res.send(student)
+    } catch (err) {
+        next(err)
+    }
+})
+
 router.post('/', async (req,res,next) => {
     try {
         // maybe should make this a find or create, if later want campuses to have unique names?

@@ -22,7 +22,7 @@ const SingleStudent = () => {
             <h2>{student.firstName + ' ' + student.lastName}</h2>
             <img src={student.imageUrl} height='200px' width='200px'/>
             <div>{'Email: ' + student.email}</div>
-            <div>{'GPA: ' + student.gpa}</div>
+            <div>{'GPA: ' + (student.gpa ? student.gpa : 'N/A')}</div>
             {/* <div>{'Campus: ' + (student.campusId ? <Link to={`/campuses/${student.campusId}`}>{student.campus.name}</Link> : "Not currently enrolled!")}</div> */}
             {student.campusId ?
                 <div>{'Campus: '}

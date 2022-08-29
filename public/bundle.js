@@ -2975,7 +2975,7 @@ var SingleStudent = function SingleStudent() {
     src: student.imageUrl,
     height: "200px",
     width: "200px"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, 'Email: ' + student.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, 'GPA: ' + student.gpa), student.campusId ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, 'Campus: ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, 'Email: ' + student.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, 'GPA: ' + (student.gpa ? student.gpa : 'N/A')), student.campusId ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, 'Campus: ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
     to: "/campuses/".concat(student.campusId)
   }, student.campus.name)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Campus: Not currently Enrolled")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null); // should put a navlink/link in the campus ternary statement
   // can probably put student info in some sort of flex box container
@@ -3025,11 +3025,14 @@ var Students = function Students() {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       className: "student",
       key: idx
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
       to: "/students/".concat(student.id)
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-      className: "student-name"
-    }, student.lastName + ', ' + student.firstName)));
+    }, student.lastName + ', ' + student.firstName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+      className: "delete",
+      onClick: function onClick() {
+        return dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_2__.deleteStudent)(student.id));
+      }
+    }, "X")));
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "student-form"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_NewStudentForm__WEBPACK_IMPORTED_MODULE_3__["default"], null)));
@@ -3414,6 +3417,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "createStudent": () => (/* binding */ createStudent),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "deleteStudent": () => (/* binding */ deleteStudent),
 /* harmony export */   "fetchStudents": () => (/* binding */ fetchStudents)
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
@@ -3440,7 +3444,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 var SET_STUDENTS = 'SET_STUDENTS';
-var CREATE_STUDENT = 'CREATE_STUDENT'; //action creators
+var CREATE_STUDENT = 'CREATE_STUDENT';
+var DELETE_STUDENT = 'DELETE_STUDENT'; //action creators
 
 var _setStudents = function _setStudents(students) {
   return {
@@ -3452,6 +3457,13 @@ var _setStudents = function _setStudents(students) {
 var _createStudent = function _createStudent(student) {
   return {
     type: CREATE_STUDENT,
+    student: student
+  };
+};
+
+var _deleteStudent = function _deleteStudent(student) {
+  return {
+    type: DELETE_STUDENT,
     student: student
   };
 }; //thunks
@@ -3517,6 +3529,36 @@ var createStudent = function createStudent(student) {
     };
   }();
 };
+var deleteStudent = function deleteStudent(id) {
+  return /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(dispatch) {
+      var _yield$axios$delete, student;
+
+      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"]("/api/students/".concat(id));
+
+            case 2:
+              _yield$axios$delete = _context3.sent;
+              student = _yield$axios$delete.data;
+              dispatch(_deleteStudent(student));
+
+            case 5:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }));
+
+    return function (_x3) {
+      return _ref3.apply(this, arguments);
+    };
+  }();
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments.length > 1 ? arguments[1] : undefined;
@@ -3527,6 +3569,12 @@ var createStudent = function createStudent(student) {
 
     case CREATE_STUDENT:
       return [].concat(_toConsumableArray(state), [action.student]);
+
+    case DELETE_STUDENT:
+      var filtered = state.filter(function (student) {
+        return student.id !== action.student.id;
+      });
+      return filtered;
 
     default:
       return state;
