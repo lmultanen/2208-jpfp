@@ -1,16 +1,20 @@
 import axios from "axios";
 
 const SET_SINGLE_CAMPUS = 'SET_SINGLE_CAMPUS';
-const UNMOUNT_SINGLE_CAMPUS = 'UNMOUNT_SINGLE_CAMPUS'
+const UNMOUNT_SINGLE_CAMPUS = 'UNMOUNT_SINGLE_CAMPUS';
+const UPDATE_SINGLE_CAMPUS = 'UPDATE_SINGLE_CAMPUS';
 
 //action creators
-const _setSingleCampus = campus => ({
+const _setSingleCampus = (campus) => ({
     type: SET_SINGLE_CAMPUS,
     campus
 })
-
-const _unmountSingleCampus = campus => ({
+const _unmountSingleCampus = (campus) => ({
     type: UNMOUNT_SINGLE_CAMPUS,
+    campus
+})
+const _updateSingleCampus = (campus) => ({
+    type: UPDATE_SINGLE_CAMPUS,
     campus
 })
 
@@ -21,10 +25,14 @@ export const fetchSingleCampus = (id) => {
         dispatch(_setSingleCampus(campus))
     }
 }
-
 export const unmountSingleCampus = () => {
     return dispatch => {
         dispatch(_unmountSingleCampus({}))
+    }
+}
+export const updateSingleCampus = (campus) => {
+    return (dispatch) => {
+        dispatch(_unmountSingleCampus)
     }
 }
 
@@ -33,7 +41,9 @@ export default (state = {}, action) => {
         case SET_SINGLE_CAMPUS:
             return action.campus;
         case UNMOUNT_SINGLE_CAMPUS:
-            return action.campus
+            return action.campus;
+        case UPDATE_SINGLE_CAMPUS:
+            return action.campus;
         default:
             return state;
     }

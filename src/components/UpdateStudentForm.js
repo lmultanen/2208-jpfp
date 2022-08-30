@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchCampuses } from "../store/campusesReducer";
-import { fetchSingleStudent, updateSingleStudent} from "../store/singleStudentReducer";
+import { fetchSingleStudent } from "../store/singleStudentReducer";
 import { updateStudent } from "../store/studentsReducer";
 
 const UpdateStudentForm = () => {
@@ -14,7 +14,7 @@ const UpdateStudentForm = () => {
         lastName: '',
         email: '',
         imageUrl: '',
-        gpa: 0
+        gpa: '0.0'
     })
     const student = useSelector(state => state.singleStudent)
     const campuses = useSelector(state => state.campuses)

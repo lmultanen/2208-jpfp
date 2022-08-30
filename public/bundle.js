@@ -2984,9 +2984,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
 /* harmony import */ var _store_singleCampusReducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/singleCampusReducer */ "./src/store/singleCampusReducer.js");
+/* harmony import */ var _UpdateCampusForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./UpdateCampusForm */ "./src/components/UpdateCampusForm.js");
+
 
 
 
@@ -2997,24 +2999,25 @@ var SingleCampus = function SingleCampus() {
   var campus = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
     return state.singleCampus;
   });
-  var params = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useParams)();
+  var params = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useParams)();
   react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
     dispatch((0,_store_singleCampusReducer__WEBPACK_IMPORTED_MODULE_2__.fetchSingleCampus)(params.id));
     return function () {
       dispatch((0,_store_singleCampusReducer__WEBPACK_IMPORTED_MODULE_2__.unmountSingleCampus)());
     };
   }, []); // should put some classNames, etc in each section to better style later
+  // will need to refactor this and SingleStudent; combine with Update forms to match wireframe images
 
-  return campus.name ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  return campus.name ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "single-campus"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, campus.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: campus.imageUrl,
     height: "200px",
     width: "200px"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, campus.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, 'Address: ' + campus.address), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, 'Enrolled students:'), campus.students.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", null, campus.students.map(function (student, idx) {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, campus.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, 'Address: ' + campus.address)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_UpdateCampusForm__WEBPACK_IMPORTED_MODULE_3__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, 'Enrolled students:'), campus.students.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", null, campus.students.map(function (student, idx) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
       key: idx
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
       to: "/students/".concat(student.id)
     }, student.lastName + ', ' + student.firstName));
   })) : "No students currently enrolled") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null);
@@ -3084,6 +3087,128 @@ var SingleStudent = function SingleStudent() {
 
 /***/ }),
 
+/***/ "./src/components/UpdateCampusForm.js":
+/*!********************************************!*\
+  !*** ./src/components/UpdateCampusForm.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var _store_campusesReducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/campusesReducer */ "./src/store/campusesReducer.js");
+/* harmony import */ var _store_singleCampusReducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/singleCampusReducer */ "./src/store/singleCampusReducer.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+var UpdateCampusForm = function UpdateCampusForm() {
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
+  var params = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useParams)();
+
+  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0___default().useState({
+    name: '',
+    imageUrl: '',
+    description: '',
+    address: ''
+  }),
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      form = _React$useState2[0],
+      setForm = _React$useState2[1];
+
+  var campus = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
+    return state.singleCampus;
+  });
+  react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
+    setForm(campus);
+  }, []);
+
+  var handleSubmit = function handleSubmit(event) {
+    event.preventDefault();
+    dispatch((0,_store_campusesReducer__WEBPACK_IMPORTED_MODULE_2__.updateCampus)(form));
+    dispatch((0,_store_singleCampusReducer__WEBPACK_IMPORTED_MODULE_3__.fetchSingleCampus)(params.id));
+  };
+
+  var handleChange = function handleChange(props) {
+    return function (event) {
+      setForm(_objectSpread(_objectSpread({}, form), {}, _defineProperty({}, props, event.target.value)));
+    };
+  };
+
+  var checkDisabled = function checkDisabled() {
+    return !form.address.length || !form.name.length;
+  };
+
+  return campus.name ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    id: "form-container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Edit Campus Info Below:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
+    id: "campus-form",
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "name"
+  }, "Campus Name", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: "warning"
+  }, form.name.length ? '' : 'Field required')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    name: "name",
+    value: form.name,
+    onChange: handleChange('name')
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "imageUrl"
+  }, "Campus Picture Url"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    name: "imageUrl",
+    value: form.imageUrl,
+    type: "url",
+    onChange: handleChange('imageUrl')
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "description"
+  }, "Description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    name: "description",
+    value: form.description,
+    onChange: handleChange('description')
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "address"
+  }, "Address", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: "warning"
+  }, form.address.length ? '' : 'Field required')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    name: "address",
+    value: form.address,
+    onChange: handleChange('address')
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    type: "submit",
+    disabled: checkDisabled()
+  }, "Update Campus"))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null);
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (UpdateCampusForm);
+
+/***/ }),
+
 /***/ "./src/components/UpdateStudentForm.js":
 /*!*********************************************!*\
   !*** ./src/components/UpdateStudentForm.js ***!
@@ -3136,7 +3261,7 @@ var UpdateStudentForm = function UpdateStudentForm() {
     lastName: '',
     email: '',
     imageUrl: '',
-    gpa: 0
+    gpa: '0.0'
   }),
       _React$useState2 = _slicedToArray(_React$useState, 2),
       form = _React$useState2[0],
@@ -3269,10 +3394,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "createCampus": () => (/* binding */ createCampus),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
 /* harmony export */   "deleteCampus": () => (/* binding */ deleteCampus),
-/* harmony export */   "fetchCampuses": () => (/* binding */ fetchCampuses)
+/* harmony export */   "fetchCampuses": () => (/* binding */ fetchCampuses),
+/* harmony export */   "updateCampus": () => (/* binding */ updateCampus)
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _singleCampusReducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./singleCampusReducer */ "./src/store/singleCampusReducer.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
@@ -3294,9 +3421,11 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 
+
 var SET_CAMPUSES = 'SET_CAMPUSES';
 var CREATE_CAMPUS = 'CREATE_CAMPUS';
-var DELETE_CAMPUS = 'DELETE_CAMPUS'; //action creators
+var DELETE_CAMPUS = 'DELETE_CAMPUS';
+var UPDATE_CAMPUS = 'UPDATE_CAMPUS'; //action creators
 
 var _setCampuses = function _setCampuses(campuses) {
   return {
@@ -3315,6 +3444,13 @@ var _createCampus = function _createCampus(campus) {
 var _deleteCampus = function _deleteCampus(campus) {
   return {
     type: DELETE_CAMPUS,
+    campus: campus
+  };
+};
+
+var _updateCampus = function _updateCampus(campus) {
+  return {
+    type: UPDATE_CAMPUS,
     campus: campus
   };
 }; //thunks
@@ -3410,6 +3546,37 @@ var deleteCampus = function deleteCampus(id) {
     };
   }();
 };
+var updateCampus = function updateCampus(campus) {
+  return /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(dispatch) {
+      var _yield$axios$put, updated;
+
+      return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              _context4.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().put("/api/campuses/".concat(campus.id), campus);
+
+            case 2:
+              _yield$axios$put = _context4.sent;
+              updated = _yield$axios$put.data;
+              dispatch(_updateCampus(updated));
+              dispatch((0,_singleCampusReducer__WEBPACK_IMPORTED_MODULE_1__.updateSingleCampus)(updated));
+
+            case 6:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4);
+    }));
+
+    return function (_x4) {
+      return _ref4.apply(this, arguments);
+    };
+  }();
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments.length > 1 ? arguments[1] : undefined;
@@ -3424,6 +3591,11 @@ var deleteCampus = function deleteCampus(id) {
     case DELETE_CAMPUS:
       return state.filter(function (campus) {
         return campus.id !== action.campus.id;
+      });
+
+    case UPDATE_CAMPUS:
+      return state.map(function (campus) {
+        return campus.id === action.campus.id ? action.campus : campus;
       });
 
     default:
@@ -3486,7 +3658,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
 /* harmony export */   "fetchSingleCampus": () => (/* binding */ fetchSingleCampus),
-/* harmony export */   "unmountSingleCampus": () => (/* binding */ unmountSingleCampus)
+/* harmony export */   "unmountSingleCampus": () => (/* binding */ unmountSingleCampus),
+/* harmony export */   "updateSingleCampus": () => (/* binding */ updateSingleCampus)
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
@@ -3500,7 +3673,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 var SET_SINGLE_CAMPUS = 'SET_SINGLE_CAMPUS';
-var UNMOUNT_SINGLE_CAMPUS = 'UNMOUNT_SINGLE_CAMPUS'; //action creators
+var UNMOUNT_SINGLE_CAMPUS = 'UNMOUNT_SINGLE_CAMPUS';
+var UPDATE_SINGLE_CAMPUS = 'UPDATE_SINGLE_CAMPUS'; //action creators
 
 var _setSingleCampus = function _setSingleCampus(campus) {
   return {
@@ -3512,6 +3686,13 @@ var _setSingleCampus = function _setSingleCampus(campus) {
 var _unmountSingleCampus = function _unmountSingleCampus(campus) {
   return {
     type: UNMOUNT_SINGLE_CAMPUS,
+    campus: campus
+  };
+};
+
+var _updateSingleCampus = function _updateSingleCampus(campus) {
+  return {
+    type: UPDATE_SINGLE_CAMPUS,
     campus: campus
   };
 }; //thunks
@@ -3552,6 +3733,11 @@ var unmountSingleCampus = function unmountSingleCampus() {
     dispatch(_unmountSingleCampus({}));
   };
 };
+var updateSingleCampus = function updateSingleCampus(campus) {
+  return function (dispatch) {
+    dispatch(_unmountSingleCampus);
+  };
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
@@ -3561,6 +3747,9 @@ var unmountSingleCampus = function unmountSingleCampus() {
       return action.campus;
 
     case UNMOUNT_SINGLE_CAMPUS:
+      return action.campus;
+
+    case UPDATE_SINGLE_CAMPUS:
       return action.campus;
 
     default:

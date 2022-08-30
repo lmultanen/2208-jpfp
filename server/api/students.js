@@ -55,8 +55,6 @@ router.put('/:id', async (req,res,next) => {
         })
         // CAN CLEAN THIS UP SOME PROBABLY; MIGHT NOT NEED TO INCLUE ON FIRST FETCH
 
-        console.log('student is saved', student)
-        console.log('student is updated', updated)
         res.send(updated);
     } catch (err) {
         next(err)
