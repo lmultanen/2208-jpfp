@@ -2816,7 +2816,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _store_studentsReducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/studentsReducer */ "./src/store/studentsReducer.js");
+/* harmony import */ var _store_campusesReducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/campusesReducer */ "./src/store/campusesReducer.js");
+/* harmony import */ var _store_studentsReducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/studentsReducer */ "./src/store/studentsReducer.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -2839,6 +2840,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 var NewStudentForm = function NewStudentForm() {
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   var blankForm = {
@@ -2846,7 +2848,7 @@ var NewStudentForm = function NewStudentForm() {
     lastName: '',
     imageUrl: '',
     email: '',
-    gpa: 0.0
+    gpa: '0.0'
   };
 
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_0___default().useState(blankForm),
@@ -2854,12 +2856,19 @@ var NewStudentForm = function NewStudentForm() {
       form = _React$useState2[0],
       setForm = _React$useState2[1];
 
+  var campuses = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
+    return state.campuses;
+  });
+  react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
+    dispatch((0,_store_campusesReducer__WEBPACK_IMPORTED_MODULE_2__.fetchCampuses)());
+  }, []);
+
   var handleSubmit = function handleSubmit(event) {
     event.preventDefault();
-    var submissionForm = removeEmptyProps(); // may need to change this later
-
+    var submissionForm = removeEmptyProps();
     submissionForm.gpa = Number(submissionForm.gpa);
-    dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_2__.createStudent)(submissionForm));
+    var selectedCampus = getSelectedCampus();
+    dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_3__.createStudent)(submissionForm, selectedCampus));
     setForm(blankForm);
   };
 
@@ -2877,6 +2886,18 @@ var NewStudentForm = function NewStudentForm() {
       }
     });
     return newForm;
+  };
+
+  var getSelectedCampus = function getSelectedCampus() {
+    var selectedCampusName = document.getElementById('campus-select').value;
+
+    if (selectedCampusName === 'Unenrolled') {
+      return null;
+    } else {
+      return campuses.find(function (campus) {
+        return campus.name === selectedCampusName;
+      });
+    }
   };
 
   var checkDisabled = function checkDisabled() {
@@ -2930,7 +2951,16 @@ var NewStudentForm = function NewStudentForm() {
     min: "0.0",
     max: "4.0",
     onChange: handleChange('gpa')
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "campus"
+  }, "Campus"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("select", {
+    id: "campus-select",
+    defaultValue: "Unenrolled"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", null, "Unenrolled"), campuses.map(function (campus, idx) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
+      key: idx
+    }, campus.name);
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     type: "submit",
     disabled: checkDisabled()
   }, "Create New Student")));
@@ -3121,10 +3151,8 @@ var UpdateStudentForm = function UpdateStudentForm() {
   react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
     //duplicating code with SingleStudent component; probably unneccessary
     //don't think I need to unmount though, since SingleStudent already taking care of that
-    // dispatch(fetchSingleStudent(params.id));
     setForm(student);
-  }, []); // student.firstName, student.campusId
-
+  }, []);
   react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
     dispatch((0,_store_campusesReducer__WEBPACK_IMPORTED_MODULE_2__.fetchCampuses)());
   }, []); //maybe should look at the todos solution code for how to properly edit
@@ -3132,22 +3160,17 @@ var UpdateStudentForm = function UpdateStudentForm() {
   var handleSubmit = function handleSubmit(event) {
     event.preventDefault();
     var selectedCampus = getSelectedCampus();
-    console.log(selectedCampus);
 
     var submissionForm = _objectSpread({}, form); // may need to change this later
 
 
     submissionForm.gpa = Number(submissionForm.gpa);
-    console.log('student before update', student);
     dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_4__.updateStudent)(submissionForm, selectedCampus));
-    console.log('student after update, before fetch', student);
     dispatch((0,_store_singleStudentReducer__WEBPACK_IMPORTED_MODULE_3__.fetchSingleStudent)(params.id));
-    console.log('student after fetch', student);
   };
 
   var getSelectedCampus = function getSelectedCampus() {
     var selectedCampusName = document.getElementById('campus-select').value;
-    console.log('selected name:', selectedCampusName);
 
     if (selectedCampusName === 'Unenrolled') {
       return null;
@@ -3156,11 +3179,7 @@ var UpdateStudentForm = function UpdateStudentForm() {
         return campus.name === selectedCampusName;
       });
     }
-  }; // WILL WANT TO MAKE A SELECTOR; MAYBE ON CHANGE, FIRE OFF A DISPATCH THAT SETS SINGLECAMPUS
-  // THEN, WILL WANT TO INCLUDE THE SINGLE CAMPUS (OR NULL) WHEN SENDING OFF THE UPDATE REQUEST
-  // WILL LIKELY NEED TO MAKE AN OBJECT CONTAINING BOTH THE STUDENT AND THE CAMPUS
-  // WILL ALSO NEED TO ADD THIS FUNCTIONALITY FOR THE CREATE STUDENT FORM
-
+  };
 
   var handleChange = function handleChange(props) {
     return function (event) {
@@ -3768,7 +3787,7 @@ var fetchStudents = function fetchStudents() {
     };
   }();
 };
-var createStudent = function createStudent(student) {
+var createStudent = function createStudent(student, campus) {
   return /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(dispatch) {
       var _yield$axios$post, newStudent;
@@ -3778,7 +3797,10 @@ var createStudent = function createStudent(student) {
           switch (_context2.prev = _context2.next) {
             case 0:
               _context2.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/students', student);
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/students', {
+                student: student,
+                campus: campus
+              });
 
             case 2:
               _yield$axios$post = _context2.sent;

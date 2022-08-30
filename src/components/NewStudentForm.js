@@ -1,5 +1,6 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCampuses } from "../store/campusesReducer";
 import { createStudent } from "../store/studentsReducer";
 
 const NewStudentForm = () => {
@@ -10,17 +11,23 @@ const NewStudentForm = () => {
         lastName: '',
         imageUrl: '',
         email: '',
-        gpa: 0.0
+        gpa: '0.0'
     }
 
     const [form, setForm] = React.useState(blankForm);
+    const campuses = useSelector(state => state.campuses)
+
+    React.useEffect(() => {
+        dispatch(fetchCampuses())
+    },[])
 
     const handleSubmit = (event) => {
         event.preventDefault();
         let submissionForm = removeEmptyProps();
-        // may need to change this later
-        submissionForm.gpa = Number(submissionForm.gpa)
-        dispatch(createStudent(submissionForm));
+        submissionForm.gpa = Number(submissionForm.gpa);
+        let selectedCampus = getSelectedCampus();
+
+        dispatch(createStudent(submissionForm, selectedCampus));
         setForm(blankForm)
     }
 
@@ -39,6 +46,15 @@ const NewStudentForm = () => {
             }
         })
         return newForm;
+    }
+
+    const getSelectedCampus = () => {
+        let selectedCampusName = document.getElementById('campus-select').value
+        if (selectedCampusName === 'Unenrolled') {
+            return null;
+        } else {
+            return campuses.find(campus => campus.name === selectedCampusName)
+        }
     }
 
     const checkDisabled = () => {
@@ -72,6 +88,12 @@ const NewStudentForm = () => {
 
                 <label htmlFor='gpa'>GPA</label>
                 <input name='gpa' value={form.gpa} type='number' step='0.01' min='0.0' max='4.0' onChange={handleChange('gpa')}/>
+
+                <label htmlFor='campus'>Campus</label>
+                <select id='campus-select' defaultValue='Unenrolled'>
+                    <option>Unenrolled</option>
+                    {campuses.map((campus,idx) => <option key={idx}>{campus.name}</option>)}
+                </select>
 
                 <button type='submit' disabled={checkDisabled()}>Create New Student</button>
 

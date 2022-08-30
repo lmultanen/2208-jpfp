@@ -22,11 +22,8 @@ const UpdateStudentForm = () => {
     React.useEffect(() => {
         //duplicating code with SingleStudent component; probably unneccessary
         //don't think I need to unmount though, since SingleStudent already taking care of that
-        // dispatch(fetchSingleStudent(params.id));
         setForm(student);
     },[])
-
-    // student.firstName, student.campusId
 
     React.useEffect(() => {
         dispatch(fetchCampuses());
@@ -36,31 +33,21 @@ const UpdateStudentForm = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         let selectedCampus = getSelectedCampus();
-        console.log(selectedCampus)
         let submissionForm = {...form};
         // may need to change this later
         submissionForm.gpa = Number(submissionForm.gpa)
-        console.log('student before update', student)
         dispatch(updateStudent(submissionForm, selectedCampus))
-        console.log('student after update, before fetch',student)
         dispatch(fetchSingleStudent(params.id))
-        console.log('student after fetch', student)
     }
 
     const getSelectedCampus = () => {
         let selectedCampusName = document.getElementById('campus-select').value
-        console.log('selected name:', selectedCampusName)
         if (selectedCampusName === 'Unenrolled') {
             return null;
         } else {
             return campuses.find(campus => campus.name === selectedCampusName)
         }
     }
-
-    // WILL WANT TO MAKE A SELECTOR; MAYBE ON CHANGE, FIRE OFF A DISPATCH THAT SETS SINGLECAMPUS
-    // THEN, WILL WANT TO INCLUDE THE SINGLE CAMPUS (OR NULL) WHEN SENDING OFF THE UPDATE REQUEST
-    // WILL LIKELY NEED TO MAKE AN OBJECT CONTAINING BOTH THE STUDENT AND THE CAMPUS
-    // WILL ALSO NEED TO ADD THIS FUNCTIONALITY FOR THE CREATE STUDENT FORM
 
     const handleChange = props => event => {
         setForm({

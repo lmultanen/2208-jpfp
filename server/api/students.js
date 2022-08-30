@@ -41,7 +41,7 @@ router.put('/:id', async (req,res,next) => {
             }
         });
         await student.update(req.body.student)
-        
+
         if (req.body.campus) {
             const campus = await Campus.findByPk(req.body.campus.id);
             if (!student.campus || (student.campus.name !== campus.name)){
@@ -66,7 +66,14 @@ router.put('/:id', async (req,res,next) => {
 router.post('/', async (req,res,next) => {
     try {
         // maybe should make this a find or create, if later want campuses to have unique names?
-        res.status(201).send(await Student.create(req.body));
+        const newStudent = await Student.create(req.body.student)
+        if (req.body.campus) {
+            const campus = await Campus.findByPk(req.body.campus.id)
+            await newStudent.setCampus(campus)
+        }
+        res.status(201).send(newStudent);
+        //modify here to setCampus if not null
+
     } catch (err) {
         next(err)
     }

@@ -31,9 +31,12 @@ export const fetchStudents = () => {
         dispatch(_setStudents(students))
     }
 }
-export const createStudent = (student) => {
+export const createStudent = (student, campus) => {
     return async (dispatch) => {
-        const {data: newStudent} = await axios.post('/api/students', student)
+        const {data: newStudent} = await axios.post('/api/students', {
+            student: student,
+            campus: campus
+        })
         dispatch(_createStudent(newStudent));
     }
 }
