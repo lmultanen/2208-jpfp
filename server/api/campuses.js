@@ -41,8 +41,20 @@ router.put('/:id', async (req,res,next) => {
                 model: Student
             }
         });
-        await campus.update(req.body)
-        res.send(campus);
+        // unenrollment process check
+        if (req.body.studentId) {
+            const student = await Student.findByPk(req.body.studentId);
+            await campus.removeStudent(student);
+            const updated = await Campus.findByPk(req.params.id, {
+                include: {
+                    model: Student
+                }
+            })
+            res.send(updated)
+        } else {
+            await campus.update(req.body)
+            res.send(campus);
+        }
     } catch (err) {
         next(err)
     }

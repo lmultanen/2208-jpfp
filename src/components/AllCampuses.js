@@ -12,7 +12,7 @@ const AllCampuses = () => {
         dispatch(fetchCampuses())
     },[])
 
-    return(
+    return( campuses.length ?
         <div id='list-form-container'>
             <div id='campuses-container'>
                 <h1>List of Campuses:</h1>
@@ -34,6 +34,7 @@ const AllCampuses = () => {
                 <NewCampusForm/>
             </div>
         </div>
+        :  <div>Loading...</div>
     )
 }
 

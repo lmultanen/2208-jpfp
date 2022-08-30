@@ -28,15 +28,11 @@ const UpdateStudentForm = () => {
     React.useEffect(() => {
         dispatch(fetchCampuses());
     },[])
-    //maybe should look at the todos solution code for how to properly edit
 
     const handleSubmit = (event) => {
         event.preventDefault();
         let selectedCampus = getSelectedCampus();
-        let submissionForm = {...form};
-        // may need to change this later
-        submissionForm.gpa = Number(submissionForm.gpa)
-        dispatch(updateStudent(submissionForm, selectedCampus))
+        dispatch(updateStudent(form, selectedCampus))
         dispatch(fetchSingleStudent(params.id))
     }
 

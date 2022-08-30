@@ -38,7 +38,7 @@ const SingleStudent = () => {
                 <UpdateStudentForm/>
             </div>
         </div>
-        : <></>
+        :  <div>Loading...</div>
     )
     
     // should put a navlink/link in the campus ternary statement

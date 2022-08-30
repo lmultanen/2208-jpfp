@@ -2571,7 +2571,7 @@ var AllCampuses = function AllCampuses() {
   react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
     dispatch((0,_store_campusesReducer__WEBPACK_IMPORTED_MODULE_2__.fetchCampuses)());
   }, []);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  return campuses.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "list-form-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "campuses-container"
@@ -2593,7 +2593,7 @@ var AllCampuses = function AllCampuses() {
     }, "X")));
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "campus-form"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_NewCampusForm__WEBPACK_IMPORTED_MODULE_3__["default"], null)));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_NewCampusForm__WEBPACK_IMPORTED_MODULE_3__["default"], null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...");
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AllCampuses);
@@ -2632,7 +2632,7 @@ var AllStudents = function AllStudents() {
     dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_2__.fetchStudents)());
   }, []); //may want to look into how to sort alphabetically
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  return students.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "list-form-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "student-list"
@@ -2650,7 +2650,7 @@ var AllStudents = function AllStudents() {
     }, "X")));
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "student-form"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_NewStudentForm__WEBPACK_IMPORTED_MODULE_3__["default"], null)));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_NewStudentForm__WEBPACK_IMPORTED_MODULE_3__["default"], null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...");
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AllStudents);
@@ -2866,7 +2866,6 @@ var NewStudentForm = function NewStudentForm() {
   var handleSubmit = function handleSubmit(event) {
     event.preventDefault();
     var submissionForm = removeEmptyProps();
-    submissionForm.gpa = Number(submissionForm.gpa);
     var selectedCampus = getSelectedCampus();
     dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_3__.createStudent)(submissionForm, selectedCampus));
     setForm(blankForm);
@@ -3005,12 +3004,18 @@ var SingleCampus = function SingleCampus() {
     return function () {
       dispatch((0,_store_singleCampusReducer__WEBPACK_IMPORTED_MODULE_2__.unmountSingleCampus)());
     };
-  }, []); // should put some classNames, etc in each section to better style later
-  // will need to refactor this and SingleStudent; combine with Update forms to match wireframe images
+  }, []); // sometimes works, sometimes needs two clicks...
+
+  var unenrollClickHandler = function unenrollClickHandler(studentId) {
+    dispatch((0,_store_singleCampusReducer__WEBPACK_IMPORTED_MODULE_2__.unenrollStudentFromCampus)(studentId, params.id));
+    dispatch((0,_store_singleCampusReducer__WEBPACK_IMPORTED_MODULE_2__.fetchSingleCampus)(params.id));
+  }; // should put some classNames, etc in each section to better style later
+  // will need to refactor this and SingleStu; combine with Update forms to match wireframe images
+
 
   return campus.name ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "single-campus"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, campus.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, campus.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: campus.imageUrl,
     height: "200px",
     width: "200px"
@@ -3019,8 +3024,13 @@ var SingleCampus = function SingleCampus() {
       key: idx
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
       to: "/students/".concat(student.id)
-    }, student.lastName + ', ' + student.firstName));
-  })) : "No students currently enrolled") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null);
+    }, student.lastName + ', ' + student.firstName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+      type: "submit",
+      onClick: function onClick() {
+        return unenrollClickHandler(student.id);
+      }
+    }, "Unenroll Student"));
+  })) : "No students currently enrolled") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...");
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SingleCampus);
@@ -3079,7 +3089,7 @@ var SingleStudent = function SingleStudent() {
     to: "/campuses/".concat(student.campus.id)
   }, student.campus.name)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Campus: Not enrolled")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "update-student-form"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_UpdateStudentForm__WEBPACK_IMPORTED_MODULE_4__["default"], null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null); // should put a navlink/link in the campus ternary statement
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_UpdateStudentForm__WEBPACK_IMPORTED_MODULE_4__["default"], null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading..."); // should put a navlink/link in the campus ternary statement
   // can probably put student info in some sort of flex box container
 };
 
@@ -3167,7 +3177,7 @@ var UpdateCampusForm = function UpdateCampusForm() {
 
   return campus.name ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "form-container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Edit Campus Info Below:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Edit Campus Info Below:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
     id: "campus-form",
     onSubmit: handleSubmit
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
@@ -3280,17 +3290,12 @@ var UpdateStudentForm = function UpdateStudentForm() {
   }, []);
   react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
     dispatch((0,_store_campusesReducer__WEBPACK_IMPORTED_MODULE_2__.fetchCampuses)());
-  }, []); //maybe should look at the todos solution code for how to properly edit
+  }, []);
 
   var handleSubmit = function handleSubmit(event) {
     event.preventDefault();
     var selectedCampus = getSelectedCampus();
-
-    var submissionForm = _objectSpread({}, form); // may need to change this later
-
-
-    submissionForm.gpa = Number(submissionForm.gpa);
-    dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_4__.updateStudent)(submissionForm, selectedCampus));
+    dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_4__.updateStudent)(form, selectedCampus));
     dispatch((0,_store_singleStudentReducer__WEBPACK_IMPORTED_MODULE_3__.fetchSingleStudent)(params.id));
   };
 
@@ -3658,6 +3663,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
 /* harmony export */   "fetchSingleCampus": () => (/* binding */ fetchSingleCampus),
+/* harmony export */   "unenrollStudentFromCampus": () => (/* binding */ unenrollStudentFromCampus),
 /* harmony export */   "unmountSingleCampus": () => (/* binding */ unmountSingleCampus),
 /* harmony export */   "updateSingleCampus": () => (/* binding */ updateSingleCampus)
 /* harmony export */ });
@@ -3674,7 +3680,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var SET_SINGLE_CAMPUS = 'SET_SINGLE_CAMPUS';
 var UNMOUNT_SINGLE_CAMPUS = 'UNMOUNT_SINGLE_CAMPUS';
-var UPDATE_SINGLE_CAMPUS = 'UPDATE_SINGLE_CAMPUS'; //action creators
+var UPDATE_SINGLE_CAMPUS = 'UPDATE_SINGLE_CAMPUS';
+var UNENROLL_STUDENT_FROM_CAMPUS = 'UNENROLL_STUDENT_FROM_CAMPUS'; //action creators
 
 var _setSingleCampus = function _setSingleCampus(campus) {
   return {
@@ -3693,6 +3700,13 @@ var _unmountSingleCampus = function _unmountSingleCampus(campus) {
 var _updateSingleCampus = function _updateSingleCampus(campus) {
   return {
     type: UPDATE_SINGLE_CAMPUS,
+    campus: campus
+  };
+};
+
+var _unenrollStudentFromCampus = function _unenrollStudentFromCampus(campus) {
+  return {
+    type: UNENROLL_STUDENT_FROM_CAMPUS,
     campus: campus
   };
 }; //thunks
@@ -3735,8 +3749,40 @@ var unmountSingleCampus = function unmountSingleCampus() {
 };
 var updateSingleCampus = function updateSingleCampus(campus) {
   return function (dispatch) {
-    dispatch(_unmountSingleCampus);
+    dispatch(_updateSingleCampus(campus));
   };
+};
+var unenrollStudentFromCampus = function unenrollStudentFromCampus(studentId, campusId) {
+  return /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(dispatch) {
+      var _yield$axios$put, campus;
+
+      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().put("/api/campuses/".concat(campusId), {
+                studentId: studentId
+              });
+
+            case 2:
+              _yield$axios$put = _context2.sent;
+              campus = _yield$axios$put.data;
+              dispatch(_unenrollStudentFromCampus(campus));
+
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+
+    return function (_x2) {
+      return _ref2.apply(this, arguments);
+    };
+  }();
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -3750,6 +3796,9 @@ var updateSingleCampus = function updateSingleCampus(campus) {
       return action.campus;
 
     case UPDATE_SINGLE_CAMPUS:
+      return action.campus;
+
+    case UNENROLL_STUDENT_FROM_CAMPUS:
       return action.campus;
 
     default:

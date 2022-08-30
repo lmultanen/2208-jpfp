@@ -24,9 +24,7 @@ const NewStudentForm = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         let submissionForm = removeEmptyProps();
-        submissionForm.gpa = Number(submissionForm.gpa);
         let selectedCampus = getSelectedCampus();
-
         dispatch(createStudent(submissionForm, selectedCampus));
         setForm(blankForm)
     }

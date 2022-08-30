@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { fetchSingleCampus, unmountSingleCampus } from "../store/singleCampusReducer";
+import { fetchSingleCampus, unenrollStudentFromCampus, unmountSingleCampus } from "../store/singleCampusReducer";
 import UpdateCampusForm from "./UpdateCampusForm";
 
 const SingleCampus = () => {
@@ -16,12 +16,19 @@ const SingleCampus = () => {
         }
     },[])
 
+    // sometimes works, sometimes needs two clicks...
+    const unenrollClickHandler = (studentId) => {
+        dispatch(unenrollStudentFromCampus(studentId, params.id))
+        dispatch(fetchSingleCampus(params.id))
+    }
+
     // should put some classNames, etc in each section to better style later
-    // will need to refactor this and SingleStudent; combine with Update forms to match wireframe images
+    // will need to refactor this and SingleStu; combine with Update forms to match wireframe images
+
     return ( campus.name ?
         <div>
             <div id='single-campus'>
-                <h2>{campus.name}</h2>
+                <h1>{campus.name}</h1>
                 <img src={campus.imageUrl} height='200px' width='200px'/>
                 <div>{campus.description}</div>
                 <div>{'Address: ' + campus.address}</div>
@@ -37,12 +44,13 @@ const SingleCampus = () => {
                             <Link to={`/students/${student.id}`}>
                                 {student.lastName + ', ' + student.firstName}
                             </Link>
+                            <button type='submit' onClick={() => unenrollClickHandler(student.id)}>Unenroll Student</button>
                         </li>
                     )
                 })}</ul>
             : "No students currently enrolled"}
         </div>
-        : <></>
+        : <div>Loading...</div>
     )
 }
 

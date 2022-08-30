@@ -3,6 +3,7 @@ import axios from "axios";
 const SET_SINGLE_CAMPUS = 'SET_SINGLE_CAMPUS';
 const UNMOUNT_SINGLE_CAMPUS = 'UNMOUNT_SINGLE_CAMPUS';
 const UPDATE_SINGLE_CAMPUS = 'UPDATE_SINGLE_CAMPUS';
+const UNENROLL_STUDENT_FROM_CAMPUS = 'UNENROLL_STUDENT_FROM_CAMPUS';
 
 //action creators
 const _setSingleCampus = (campus) => ({
@@ -15,6 +16,10 @@ const _unmountSingleCampus = (campus) => ({
 })
 const _updateSingleCampus = (campus) => ({
     type: UPDATE_SINGLE_CAMPUS,
+    campus
+})
+const _unenrollStudentFromCampus = (campus) => ({
+    type: UNENROLL_STUDENT_FROM_CAMPUS,
     campus
 })
 
@@ -32,7 +37,13 @@ export const unmountSingleCampus = () => {
 }
 export const updateSingleCampus = (campus) => {
     return (dispatch) => {
-        dispatch(_unmountSingleCampus)
+        dispatch(_updateSingleCampus(campus))
+    }
+}
+export const unenrollStudentFromCampus = (studentId, campusId) => {
+    return async (dispatch) => {
+        const {data: campus} = await axios.put(`/api/campuses/${campusId}`, {studentId: studentId});
+        dispatch(_unenrollStudentFromCampus(campus));
     }
 }
 
@@ -44,6 +55,8 @@ export default (state = {}, action) => {
             return action.campus;
         case UPDATE_SINGLE_CAMPUS:
             return action.campus;
+        case UNENROLL_STUDENT_FROM_CAMPUS:
+            return action.campus
         default:
             return state;
     }

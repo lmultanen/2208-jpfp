@@ -13,7 +13,7 @@ const AllStudents = () => {
     },[])
 
     //may want to look into how to sort alphabetically
-    return(
+    return( students.length ?
         <div id='list-form-container'>
             <div id='student-list'>
                 <h2>Students:</h2>
@@ -35,6 +35,7 @@ const AllStudents = () => {
                 <NewStudentForm/>
             </div>
         </div>
+        :  <div>Loading...</div>
     )
 }
 
