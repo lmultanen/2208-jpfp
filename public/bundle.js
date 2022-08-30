@@ -2598,12 +2598,14 @@ var AllCampuses = function AllCampuses() {
       key: idx
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       className: "link-and-delete"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
-      to: "/campuses/".concat(campus.id),
-      className: "campus-name-img"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
       className: "campus-name"
-    }, campus.name, " ")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+      to: "/campuses/".concat(campus.id),
+      className: "campus-name-link"
+    }, campus.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+      className: "enrollment-num"
+    }, " (".concat(campus.students.length, " enrollments)"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
       className: "delete",
       onClick: function onClick() {
         return dispatch((0,_store_campusesReducer__WEBPACK_IMPORTED_MODULE_2__.deleteCampus)(campus.id));
@@ -2665,9 +2667,11 @@ var AllStudents = function AllStudents() {
       key: idx
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       className: "link-and-delete"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
       to: "/students/".concat(student.id)
-    }, student.lastName + ', ' + student.firstName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    }, student.lastName + ', ' + student.firstName), student.campus ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+      className: "attend-status"
+    }, ' - attends ' + student.campus.name) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
       className: "delete",
       onClick: function onClick() {
         return dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_2__.deleteStudent)(student.id));

@@ -22,9 +22,12 @@ const AllStudents = () => {
                     return(
                     <div className="student" key={idx}>
                         <div className="link-and-delete">
-                            <Link to={`/students/${student.id}`}>
-                                    {student.lastName + ', ' + student.firstName}             
-                            </Link>
+                            <div>
+                                <Link to={`/students/${student.id}`}>
+                                        {student.lastName + ', ' + student.firstName}             
+                                </Link>
+                                {student.campus ? <span className="attend-status">{' - attends ' + student.campus.name}</span> : <></>}
+                            </div>
                         
                             <button className="delete" onClick={() => dispatch(deleteStudent(student.id))}>X</button>
                         </div>

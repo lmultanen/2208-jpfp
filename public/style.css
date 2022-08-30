@@ -45,6 +45,7 @@ form {
   background-color: red;
   height: 1.5em;
   width: 1.5em;
+  margin-left: 1em;
   justify-self: flex-end;
 }
 
@@ -73,14 +74,21 @@ form {
 
 .campus-name {
   margin-top: 0;
-  justify-self: center;
+  display: flex;
+  flex-direction: row;
 }
 
-.campus-name-img {
+.campus-name-link {
   margin-top: 0px;
   padding-top: 0%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.attend-status, .enrollment-num {
+  color: grey;
+  font-style: italic;
+  margin-left: .25em;
 }

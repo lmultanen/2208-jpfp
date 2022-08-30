@@ -20,9 +20,15 @@ const AllCampuses = () => {
                     return(
                     <div className="campus" key={idx}>
                         <div  className="link-and-delete">
-                            <Link to={`/campuses/${campus.id}`} className='campus-name-img'>
-                                <h2 className="campus-name">{campus.name} </h2>
-                            </Link>
+                            <h2 className="campus-name">
+                                <Link to={`/campuses/${campus.id}`} className='campus-name-link'>
+                                    {campus.name} 
+                                </Link> 
+                                <span className="enrollment-num">
+                                    {` (${campus.students.length} enrollments)`}
+                                </span> 
+                            </h2>
+                        
                             <button className="delete" onClick={() => dispatch(deleteCampus(campus.id))}>X</button>
                         </div>
                         <img src={campus.imageUrl} height='150px' width='150px'/>

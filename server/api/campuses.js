@@ -4,7 +4,11 @@ const router = require('express').Router();
 
 router.get('/', async (req,res,next) => {
     try {
-        const campuses = await Campus.findAll();
+        const campuses = await Campus.findAll({
+            include: {
+                model: Student
+            }
+        });
         res.send(campuses);
     } catch (err) {
         next(err)
