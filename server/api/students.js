@@ -41,15 +41,23 @@ router.put('/:id', async (req,res,next) => {
             }
         });
         await student.update(req.body.student)
-        //not efficient always resetting here; could write out some conditions
+        
         if (req.body.campus) {
             const campus = await Campus.findByPk(req.body.campus.id);
-            // console.log('logging new campus and id,', campus, campus.id)
-            await student.setCampus(campus)
-            // console.log('logging updated student model,', student)
+            if (!student.campus || (student.campus.name !== campus.name)){
+                await student.setCampus(campus)
+            }
         }
-        // await student.setCampus(req.body.campus)
-        res.send(student);
+        const updated = await Student.findByPk(req.params.id, {
+            include: {
+                model: Campus
+            }
+        })
+        // CAN CLEAN THIS UP SOME PROBABLY; MIGHT NOT NEED TO INCLUE ON FIRST FETCH
+
+        console.log('student is saved', student)
+        console.log('student is updated', updated)
+        res.send(updated);
     } catch (err) {
         next(err)
     }

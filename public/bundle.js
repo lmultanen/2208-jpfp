@@ -3121,9 +3121,10 @@ var UpdateStudentForm = function UpdateStudentForm() {
   react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
     //duplicating code with SingleStudent component; probably unneccessary
     //don't think I need to unmount though, since SingleStudent already taking care of that
-    dispatch((0,_store_singleStudentReducer__WEBPACK_IMPORTED_MODULE_3__.fetchSingleStudent)(params.id));
+    // dispatch(fetchSingleStudent(params.id));
     setForm(student);
-  }, [student.firstName, student.campusId]);
+  }, []); // student.firstName, student.campusId
+
   react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
     dispatch((0,_store_campusesReducer__WEBPACK_IMPORTED_MODULE_2__.fetchCampuses)());
   }, []); //maybe should look at the todos solution code for how to properly edit
@@ -3137,8 +3138,11 @@ var UpdateStudentForm = function UpdateStudentForm() {
 
 
     submissionForm.gpa = Number(submissionForm.gpa);
+    console.log('student before update', student);
     dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_4__.updateStudent)(submissionForm, selectedCampus));
+    console.log('student after update, before fetch', student);
     dispatch((0,_store_singleStudentReducer__WEBPACK_IMPORTED_MODULE_3__.fetchSingleStudent)(params.id));
+    console.log('student after fetch', student);
   };
 
   var getSelectedCampus = function getSelectedCampus() {

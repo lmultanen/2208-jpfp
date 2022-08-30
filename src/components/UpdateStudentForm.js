@@ -22,9 +22,11 @@ const UpdateStudentForm = () => {
     React.useEffect(() => {
         //duplicating code with SingleStudent component; probably unneccessary
         //don't think I need to unmount though, since SingleStudent already taking care of that
-        dispatch(fetchSingleStudent(params.id));
+        // dispatch(fetchSingleStudent(params.id));
         setForm(student);
-    },[student.firstName, student.campusId])
+    },[])
+
+    // student.firstName, student.campusId
 
     React.useEffect(() => {
         dispatch(fetchCampuses());
@@ -38,8 +40,11 @@ const UpdateStudentForm = () => {
         let submissionForm = {...form};
         // may need to change this later
         submissionForm.gpa = Number(submissionForm.gpa)
+        console.log('student before update', student)
         dispatch(updateStudent(submissionForm, selectedCampus))
+        console.log('student after update, before fetch',student)
         dispatch(fetchSingleStudent(params.id))
+        console.log('student after fetch', student)
     }
 
     const getSelectedCampus = () => {
