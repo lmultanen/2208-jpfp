@@ -16,24 +16,26 @@ const AllStudents = () => {
     //may want to look into how to sort alphabetically
     return( students.length ?
         <div id='list-form-container'>
-            <div id='student-list'>
+            <div>
                 <h1>Current Students:</h1>
-                {students.map((student,idx) => {
-                    return(
-                    <div className="student" key={idx}>
-                        <div className="link-and-delete">
-                            <div>
-                                <Link to={`/students/${student.id}`}>
-                                        {student.lastName + ', ' + student.firstName}             
-                                </Link>
-                                {student.campus ? <span className="attend-status">{' - attends ' + student.campus.name}</span> : <></>}
+                    <ul id='student-list'>
+                    {students.map((student,idx) => {
+                        return(
+                        <li className="student" key={idx}>
+                            <div className="link-and-delete">
+                                <div>
+                                    <Link to={`/students/${student.id}`}>
+                                            {student.lastName + ', ' + student.firstName}             
+                                    </Link>
+                                    {student.campus ? <span className="attend-status">{' - attends ' + student.campus.name}</span> : <></>}
+                                </div>
+                            
+                                <button className="delete" onClick={() => dispatch(deleteStudent(student.id))}>X</button>
                             </div>
-                        
-                            <button className="delete" onClick={() => dispatch(deleteStudent(student.id))}>X</button>
-                        </div>
-                    </div>
-                    )
-                })}
+                        </li>
+                        )
+                    })}
+                </ul>
             </div>
             <div id='student-form'>
                 <NewStudentForm/>
