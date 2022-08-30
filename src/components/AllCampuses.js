@@ -19,13 +19,13 @@ const AllCampuses = () => {
                 {campuses.map((campus, idx) => {
                     return(
                     <div className="campus" key={idx}>
-                        <Link to={`/campuses/${campus.id}`}>
-                            <h3>{campus.name} </h3>
-                            <img src={campus.imageUrl} height='150px' width='150px'/>
-                        </Link>
-                        <span>
+                        <div  className="link-and-delete">
+                            <Link to={`/campuses/${campus.id}`} className='campus-name-img'>
+                                <h2 className="campus-name">{campus.name} </h2>
+                            </Link>
                             <button className="delete" onClick={() => dispatch(deleteCampus(campus.id))}>X</button>
-                        </span>
+                        </div>
+                        <img src={campus.imageUrl} height='150px' width='150px'/>
                     </div>
                     )
                 })}

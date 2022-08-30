@@ -17,17 +17,17 @@ const AllStudents = () => {
     return( students.length ?
         <div id='list-form-container'>
             <div id='student-list'>
-                <h2>Students:</h2>
+                <h1>Current Students:</h1>
                 {students.map((student,idx) => {
                     return(
                     <div className="student" key={idx}>
-                        <span>
+                        <div className="link-and-delete">
                             <Link to={`/students/${student.id}`}>
                                     {student.lastName + ', ' + student.firstName}             
                             </Link>
                         
                             <button className="delete" onClick={() => dispatch(deleteStudent(student.id))}>X</button>
-                        </span>
+                        </div>
                     </div>
                     )
                 })}

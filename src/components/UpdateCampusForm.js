@@ -39,7 +39,7 @@ const UpdateCampusForm = () => {
 
     return( campus.name ?
         <div id='form-container'>
-            <h2>Edit Campus Info Below:</h2>
+            <h3>Edit Campus Info Below:</h3>
             <form id='campus-form' onSubmit={handleSubmit}>
                 <label htmlFor='name'>
                     Campus Name

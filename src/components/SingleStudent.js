@@ -22,7 +22,7 @@ const SingleStudent = () => {
     return( student.firstName ?
         <div id='single-student-container'>
             <div id='student-info'>
-                <h2>{student.firstName + ' ' + student.lastName}</h2>
+                <h1>{student.firstName + ' ' + student.lastName}</h1>
                 <img src={student.imageUrl} height='200px' width='200px'/>
                 <div>{'Email: ' + student.email}</div>
                 <div>{'GPA: ' + (student.gpa ? student.gpa : 'N/A')}</div>

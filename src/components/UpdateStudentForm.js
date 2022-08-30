@@ -58,7 +58,7 @@ const UpdateStudentForm = () => {
     
     return( student.firstName ?
         <div id='form-container'>
-            <h1>Update Student Information:</h1>
+            <h3>Update Student Information:</h3>
             <form id='student-form' onSubmit={(handleSubmit)}>
                 <label htmlFor='firstName'>
                     First Name

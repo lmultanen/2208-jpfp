@@ -61,7 +61,7 @@ const NewStudentForm = () => {
 
     return(
         <div id='form-container'>
-            <h1>Add New Student Below:</h1>
+            <h1>Add New Student:</h1>
             <form id='student-form' onSubmit={(handleSubmit)}>
                 <label htmlFor='firstName'>
                     First Name

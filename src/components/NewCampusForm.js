@@ -45,7 +45,7 @@ const NewCampusForm = () => {
 
     return(
         <div id='form-container'>
-            <h1>Add New Campus Below:</h1>
+            <h1>Add New Campus:</h1>
             <form id='campus-form' onSubmit={handleSubmit}>
                 <label htmlFor='name'>
                     Campus Name
