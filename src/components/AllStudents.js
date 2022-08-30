@@ -12,6 +12,7 @@ const AllStudents = () => {
         dispatch(fetchStudents())
     },[])
 
+    //for filtering, may need to clone the students array and filter/sort on that
     //may want to look into how to sort alphabetically
     return( students.length ?
         <div id='list-form-container'>

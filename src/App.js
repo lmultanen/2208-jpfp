@@ -5,10 +5,21 @@ import Home from "./components/Home";
 import SingleCampus from "./components/SingleCampus";
 import SingleStudent from "./components/SingleStudent";
 import AllStudents from "./components/AllStudents";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCampuses } from "./store/campusesReducer";
+import { fetchStudents } from "./store/studentsReducer";
 
 
 function App(){
-    
+    const dispatch = useDispatch();
+    const campuses = useSelector(state => state.campuses);
+    const students = useSelector(state => state.students)
+
+    React.useEffect(() => {
+        dispatch(fetchCampuses());
+        dispatch(fetchStudents());
+    },[])
+
     return(
         <>  
             <nav> Menu
@@ -22,13 +33,13 @@ function App(){
                     to='/campuses' 
                     className='menu-link'
                     style={({isActive}) => ({color: isActive ? '#3380FF' : 'white'})}>
-                        Campuses
+                        Campuses ({campuses.length})
                 </NavLink>
                 <NavLink 
                     to='/students' 
                     className='menu-link'
                     style={({isActive}) => ({color: isActive ? '#3380FF' : 'white'})}>
-                        Students
+                        Students ({students.length})
                 </NavLink>
             </nav>
             <Routes>
