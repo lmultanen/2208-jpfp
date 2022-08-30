@@ -2822,9 +2822,10 @@ var NewCampusForm = function NewCampusForm() {
     value: form.address,
     onChange: handleChange('address')
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "submit-button",
     type: "submit",
     disabled: checkDisabled()
-  }, "Create New Campus"))); // add checks to button to disable it if name or address empty
+  }, "Create New Campus")));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NewCampusForm);
@@ -2989,6 +2990,7 @@ var NewStudentForm = function NewStudentForm() {
       key: idx
     }, campus.name);
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "submit-button",
     type: "submit",
     disabled: checkDisabled()
   }, "Create New Student")));
@@ -3054,6 +3056,7 @@ var SingleCampus = function SingleCampus() {
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
       to: "/students/".concat(student.id)
     }, student.lastName + ', ' + student.firstName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+      className: "unenroll-button",
       type: "submit",
       onClick: function onClick() {
         return unenrollClickHandler(student.id);
@@ -3239,6 +3242,7 @@ var UpdateCampusForm = function UpdateCampusForm() {
     value: form.address,
     onChange: handleChange('address')
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "submit-button",
     type: "submit",
     disabled: checkDisabled()
   }, "Update Campus"))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null);
@@ -3407,6 +3411,7 @@ var UpdateStudentForm = function UpdateStudentForm() {
       key: idx
     }, campus.name);
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "submit-button",
     type: "submit",
     disabled: checkDisabled()
   }, "Update Student"))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null);

@@ -90,7 +90,7 @@ const UpdateStudentForm = () => {
                     {campuses.map((campus,idx) => <option key={idx}>{campus.name}</option>)}
                 </select>
 
-                <button type='submit' disabled={checkDisabled()}>Update Student</button>
+                <button className="submit-button" type='submit' disabled={checkDisabled()}>Update Student</button>
 
             </form>
         </div> 

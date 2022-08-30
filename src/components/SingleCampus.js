@@ -44,7 +44,7 @@ const SingleCampus = () => {
                             <Link to={`/students/${student.id}`}>
                                 {student.lastName + ', ' + student.firstName}
                             </Link>
-                            <button type='submit' onClick={() => unenrollClickHandler(student.id)}>Unenroll Student</button>
+                            <button className="unenroll-button" type='submit' onClick={() => unenrollClickHandler(student.id)}>Unenroll Student</button>
                         </li>
                     )
                 })}</ul>

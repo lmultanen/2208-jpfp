@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { createCampus } from "../store/campusesReducer";
+import { createCampus, fetchCampuses } from "../store/campusesReducer";
 
 const NewCampusForm = () => {
     const dispatch = useDispatch()
@@ -65,11 +65,10 @@ const NewCampusForm = () => {
                 </label>
                 <input name='address' value={form.address} onChange={handleChange('address')}/>
 
-                <button type='submit' disabled={checkDisabled()}>Create New Campus</button>
+                <button className="submit-button" type='submit' disabled={checkDisabled()}>Create New Campus</button>
             </form>
         </div>
     )
-        // add checks to button to disable it if name or address empty
 }
 
 export default NewCampusForm;

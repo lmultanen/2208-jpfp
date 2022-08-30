@@ -59,7 +59,7 @@ const UpdateCampusForm = () => {
                 </label>
                 <input name='address' value={form.address} onChange={handleChange('address')}/>
 
-                <button type='submit' disabled={checkDisabled()}>Update Campus</button>
+                <button className="submit-button" type='submit' disabled={checkDisabled()}>Update Campus</button>
             </form>
         </div>
         : <></>

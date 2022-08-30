@@ -57,7 +57,6 @@ router.put('/:id', async (req,res,next) => {
                 model: Campus
             }
         })
-        // CAN CLEAN THIS UP SOME PROBABLY; MIGHT NOT NEED TO INCLUE ON FIRST FETCH
 
         res.send(updated);
     } catch (err) {
@@ -73,8 +72,7 @@ router.post('/', async (req,res,next) => {
             const campus = await Campus.findByPk(req.body.campus.id)
             await newStudent.setCampus(campus)
         }
-        res.status(201).send(newStudent);
-        //modify here to setCampus if not null
+        res.status(201).send(await Student.findByPk(newStudent.id, {include: {model: Campus}}));
 
     } catch (err) {
         next(err)

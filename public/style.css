@@ -1,3 +1,19 @@
+* {
+  margin: 0;
+}
+
+body::after {
+  content: "";
+  background: url('booksbg.jpg');
+  opacity: 0.1;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
+
 nav {
     align-items: center;
     background-color: #333333;
@@ -18,11 +34,6 @@ nav {
   margin: 2em
 }
 
-#list-form-container > {
-  flex: 1;
-  margin: 2em
-}
-
 .warning {
   color: white;
   background-color: orange;
@@ -32,9 +43,28 @@ nav {
 form {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   flex-grow: 2;
-  margin: 1em;
+  border: #333333 solid;
+  padding: .5em;
+  box-sizing: content-box;
+  background-color: beige;
+}
+
+form > * {
+  margin: .25em;
+}
+
+/* button formatting */
+.submit-button {
+  background-color: #59A9E9;
+  color: white;
+}
+.submit-button:hover {
+  background-color: #59A9C2;
+}
+.submit-button:disabled {
+  background-color: #ccc;
 }
 
 .delete {
@@ -42,12 +72,26 @@ form {
   justify-content: center;
   display: flex;
   align-items: center;
-  background-color: red;
+  background-color: pink;
   height: 1.5em;
   width: 1.5em;
   margin-left: 1em;
   justify-self: flex-end;
 }
+.delete:hover {
+  background-color: red;
+}
+
+.unenroll-button {
+  background-color: pink;
+  color: white;
+  margin-left: 1em;
+}
+.unenroll-button:hover {
+  background-color: red;
+}
+
+
 
 .link-and-delete {
   display: flex;
@@ -70,6 +114,10 @@ form {
   border: #333333 solid;
   padding: .25em;
   box-sizing: border-box;
+  background-color: aliceblue;
+}
+.campus:nth-child(odd) {
+  background-color: lightsteelblue;
 }
 
 .campus-name {

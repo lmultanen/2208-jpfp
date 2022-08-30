@@ -67,7 +67,8 @@ router.put('/:id', async (req,res,next) => {
 router.post('/', async (req,res,next) => {
     try {
         // maybe should make this a find or create, if later want campuses to have unique names?
-        res.status(201).send(await Campus.create(req.body));
+        const campus = await Campus.create(req.body)
+        res.status(201).send(await Campus.findByPk(campus.id, {include: {model: Student}}));
     } catch (err) {
         next(err)
     }

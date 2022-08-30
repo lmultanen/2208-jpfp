@@ -93,7 +93,7 @@ const NewStudentForm = () => {
                     {campuses.map((campus,idx) => <option key={idx}>{campus.name}</option>)}
                 </select>
 
-                <button type='submit' disabled={checkDisabled()}>Create New Student</button>
+                <button className="submit-button" type='submit' disabled={checkDisabled()}>Create New Student</button>
 
             </form>
         </div>
