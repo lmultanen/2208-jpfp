@@ -35,3 +35,13 @@ nav {
   justify-content: center;
   margin: 1em;
 } */
+
+.delete {
+  color: white;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  background-color: red;
+  height: 1.5em;
+  width: 1.5em;
+}
