@@ -146,6 +146,15 @@ form > * {
   margin-left: .25em;
 }
 
+.sort-div {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1em;
+}
+.sort-div > button {
+  margin-left: .5em;
+}
+
 /* single student and campus view */
 #single-student-container, #single-campus-container {
   display: flex;

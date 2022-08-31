@@ -2583,6 +2583,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
 /* harmony import */ var _store_campusesReducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/campusesReducer */ "./src/store/campusesReducer.js");
 /* harmony import */ var _NewCampusForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NewCampusForm */ "./src/components/NewCampusForm.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -2594,10 +2606,22 @@ var AllCampuses = function AllCampuses() {
   var campuses = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
     return state.campuses;
   });
+
+  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0___default().useState(true),
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      sortStudentsDescending = _React$useState2[0],
+      setSortStudentsDescending = _React$useState2[1];
+
   react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
     dispatch((0,_store_campusesReducer__WEBPACK_IMPORTED_MODULE_2__.fetchCampuses)());
   }, []);
-  return campuses.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+
+  var sortByStudentsHandler = function sortByStudentsHandler() {
+    dispatch((0,_store_campusesReducer__WEBPACK_IMPORTED_MODULE_2__.sortByStudents)(campuses, sortStudentsDescending));
+    setSortStudentsDescending(!sortStudentsDescending);
+  };
+
+  return campuses ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "list-form-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "campuses-container"
@@ -2626,7 +2650,12 @@ var AllCampuses = function AllCampuses() {
     }));
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "campus-form"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_NewCampusForm__WEBPACK_IMPORTED_MODULE_3__["default"], null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...");
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_NewCampusForm__WEBPACK_IMPORTED_MODULE_3__["default"], null), campuses.length > 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "sort-div"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    type: "submit",
+    onClick: sortByStudentsHandler
+  }, "Sort by enrollment")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...");
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AllCampuses);
@@ -2698,15 +2727,9 @@ var AllStudents = function AllStudents() {
     dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_2__.sortByGpa)(students, gpaDescending));
     setGpaDescending(!gpaDescending);
     setLastNameAToZ(true);
-  }; // sorting alphabetically works descending; may want to add functionality for other way?
-  // can make a new component with handling ordering once functionality written
-  // maybe can make these functions in the reducer; clicking on them will reorder the state
-  // that way, don't need to make a duplicate here.
-  //for filtering, may need to clone the students array and filter/sort on that
-  //may want to look into how to sort alphabetically
+  };
 
-
-  return students.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  return students ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "list-form-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Current Students:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
     id: "student-list"
@@ -2726,13 +2749,15 @@ var AllStudents = function AllStudents() {
         return dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_2__.deleteStudent)(student.id));
       }
     }, "X")));
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Sort:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  })), students.length > 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "sort-div"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, "Sort:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     type: "submit",
     onClick: alphabetSortHandler
-  }, "last name alphabetically"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  }, "by last name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     type: "submit",
     onClick: gpaSortHandler
-  }, "by gpa"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, "by gpa")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "student-form"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_NewStudentForm__WEBPACK_IMPORTED_MODULE_3__["default"], null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...");
 };
@@ -3577,6 +3602,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
 /* harmony export */   "deleteCampus": () => (/* binding */ deleteCampus),
 /* harmony export */   "fetchCampuses": () => (/* binding */ fetchCampuses),
+/* harmony export */   "sortByStudents": () => (/* binding */ sortByStudents),
 /* harmony export */   "updateCampus": () => (/* binding */ updateCampus)
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
@@ -3607,7 +3633,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var SET_CAMPUSES = 'SET_CAMPUSES';
 var CREATE_CAMPUS = 'CREATE_CAMPUS';
 var DELETE_CAMPUS = 'DELETE_CAMPUS';
-var UPDATE_CAMPUS = 'UPDATE_CAMPUS'; //action creators
+var UPDATE_CAMPUS = 'UPDATE_CAMPUS';
+var SORT_BY_STUDENTS = 'SORT_BY_STUDENTS'; //action creators
 
 var _setCampuses = function _setCampuses(campuses) {
   return {
@@ -3634,6 +3661,14 @@ var _updateCampus = function _updateCampus(campus) {
   return {
     type: UPDATE_CAMPUS,
     campus: campus
+  };
+};
+
+var _sortByStudents = function _sortByStudents(campuses, descending) {
+  return {
+    type: SORT_BY_STUDENTS,
+    campuses: campuses,
+    descending: descending
   };
 }; //thunks
 
@@ -3759,6 +3794,11 @@ var updateCampus = function updateCampus(campus) {
     };
   }();
 };
+var sortByStudents = function sortByStudents(campuses, descending) {
+  return function (dispatch) {
+    dispatch(_sortByStudents(campuses, descending));
+  };
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments.length > 1 ? arguments[1] : undefined;
@@ -3779,6 +3819,16 @@ var updateCampus = function updateCampus(campus) {
       return state.map(function (campus) {
         return campus.id === action.campus.id ? action.campus : campus;
       });
+
+    case SORT_BY_STUDENTS:
+      var sorted = _toConsumableArray(action.campuses);
+
+      action.descending ? sorted = sorted.sort(function (campusA, campusB) {
+        return campusB.students.length - campusA.students.length;
+      }) : sorted = sorted.sort(function (campusA, campusB) {
+        return campusA.students.length - campusB.students.length;
+      });
+      return sorted;
 
     default:
       return state;

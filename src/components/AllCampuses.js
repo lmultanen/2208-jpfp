@@ -1,18 +1,24 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { deleteCampus, fetchCampuses } from "../store/campusesReducer";
+import { deleteCampus, fetchCampuses, sortByStudents } from "../store/campusesReducer";
 import NewCampusForm from "./NewCampusForm";
 
 const AllCampuses = () => {
     const dispatch = useDispatch();
     const campuses = useSelector(state => state.campuses)
+    const [sortStudentsDescending, setSortStudentsDescending] = React.useState(true);
 
     React.useEffect(() => {
         dispatch(fetchCampuses())
     },[])
 
-    return( campuses.length ?
+    const sortByStudentsHandler = () => {
+        dispatch(sortByStudents(campuses, sortStudentsDescending));
+        setSortStudentsDescending(!sortStudentsDescending)
+    }
+
+    return( campuses ?
         <div id='list-form-container'>
             <div id='campuses-container'>
                 <h1>List of Campuses:</h1>
@@ -38,6 +44,12 @@ const AllCampuses = () => {
             </div>
             <div id='campus-form'>
                 <NewCampusForm/>
+                {campuses.length > 1 ? 
+                    <div className="sort-div">
+                        <button type='submit' onClick={sortByStudentsHandler}>Sort by enrollment</button>
+                    </div>
+                    : <></>
+                }
             </div>
         </div>
         :  <div>Loading...</div>
