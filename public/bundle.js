@@ -2650,6 +2650,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store_studentsReducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/studentsReducer */ "./src/store/studentsReducer.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
 /* harmony import */ var _NewStudentForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NewStudentForm */ "./src/components/NewStudentForm.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -2660,17 +2672,32 @@ var AllStudents = function AllStudents() {
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   var students = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
     return state.students;
-  });
+  }); //will pass these variables into reducer methods to determine whether to sort ascending or descending
+
+  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0___default().useState(true),
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      lastNameAToZ = _React$useState2[0],
+      setLastNameAToZ = _React$useState2[1];
+
+  var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0___default().useState(true),
+      _React$useState4 = _slicedToArray(_React$useState3, 2),
+      gpaDescending = _React$useState4[0],
+      setGpaDescending = _React$useState4[1];
+
   react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
     dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_2__.fetchStudents)());
   }, []);
 
   var alphabetSortHandler = function alphabetSortHandler() {
-    dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_2__.sortAlphabetically)(students)); // dispatch(fetchStudents());
+    dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_2__.sortAlphabetically)(students, lastNameAToZ));
+    setLastNameAToZ(!lastNameAToZ);
+    setGpaDescending(true);
   };
 
   var gpaSortHandler = function gpaSortHandler() {
-    dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_2__.sortByGpa)(students)); // dispatch(fetchStudents());
+    dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_2__.sortByGpa)(students, gpaDescending));
+    setGpaDescending(!gpaDescending);
+    setLastNameAToZ(true);
   }; // sorting alphabetically works descending; may want to add functionality for other way?
   // can make a new component with handling ordering once functionality written
   // maybe can make these functions in the reducer; clicking on them will reorder the state
@@ -4217,17 +4244,19 @@ var _updateStudent = function _updateStudent(student) {
   };
 };
 
-var _sortAlphabetically = function _sortAlphabetically(students) {
+var _sortAlphabetically = function _sortAlphabetically(students, aToZ) {
   return {
     type: SORT_ALPHABETICALLY,
-    students: students
+    students: students,
+    aToZ: aToZ
   };
 };
 
-var _sortByGpa = function _sortByGpa(students) {
+var _sortByGpa = function _sortByGpa(students, descending) {
   return {
     type: SORT_BY_GPA,
-    students: students
+    students: students,
+    descending: descending
   };
 }; //thunks
 
@@ -4359,14 +4388,14 @@ var updateStudent = function updateStudent(student, campus) {
     };
   }();
 };
-var sortAlphabetically = function sortAlphabetically(students) {
+var sortAlphabetically = function sortAlphabetically(students, aToZ) {
   return function (dispatch) {
-    dispatch(_sortAlphabetically(students));
+    dispatch(_sortAlphabetically(students, aToZ));
   };
 };
-var sortByGpa = function sortByGpa(students) {
+var sortByGpa = function sortByGpa(students, descending) {
   return function (dispatch) {
-    dispatch(_sortByGpa(students));
+    dispatch(_sortByGpa(students, descending));
   };
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
@@ -4391,17 +4420,23 @@ var sortByGpa = function sortByGpa(students) {
       });
 
     case SORT_ALPHABETICALLY:
-      var sorted = _toConsumableArray(action.students).sort(function (studentA, studentB) {
-        return studentA.lastName.localeCompare(studentB.lastName);
-      });
+      var sorted = _toConsumableArray(action.students);
 
+      action.aToZ ? sorted = sorted.sort(function (studentA, studentB) {
+        return studentA.lastName.localeCompare(studentB.lastName);
+      }) : sorted = sorted.sort(function (studentA, studentB) {
+        return -studentA.lastName.localeCompare(studentB.lastName);
+      });
       return sorted;
 
     case SORT_BY_GPA:
-      var gpaSorted = _toConsumableArray(action.students).sort(function (studentA, studentB) {
-        return Number(studentB.gpa) - Number(studentA.gpa);
-      });
+      var gpaSorted = _toConsumableArray(action.students);
 
+      action.descending ? gpaSorted = gpaSorted.sort(function (studentA, studentB) {
+        return Number(studentB.gpa) - Number(studentA.gpa);
+      }) : gpaSorted = gpaSorted.sort(function (studentA, studentB) {
+        return Number(studentA.gpa) - Number(studentB.gpa);
+      });
       return gpaSorted;
 
     default:

@@ -8,18 +8,25 @@ const AllStudents = () => {
     const dispatch = useDispatch()
     const students = useSelector(state => state.students)
 
+    //will pass these variables into reducer methods to determine whether to sort ascending or descending
+    const [lastNameAToZ, setLastNameAToZ] = React.useState(true);
+    const [gpaDescending, setGpaDescending] = React.useState(true)
+
     React.useEffect(() => {
         dispatch(fetchStudents())
     },[])
 
     const alphabetSortHandler = () => {
-        dispatch(sortAlphabetically(students));
-        // dispatch(fetchStudents());
+
+        dispatch(sortAlphabetically(students, lastNameAToZ));
+        setLastNameAToZ(!lastNameAToZ);
+        setGpaDescending(true);
     }
 
     const gpaSortHandler = () => {
-        dispatch(sortByGpa(students));
-        // dispatch(fetchStudents());
+        dispatch(sortByGpa(students, gpaDescending));
+        setGpaDescending(!gpaDescending);
+        setLastNameAToZ(true);
     }
 
     // sorting alphabetically works descending; may want to add functionality for other way?

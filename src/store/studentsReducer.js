@@ -25,13 +25,15 @@ const _updateStudent = (student) => ({
     type: UPDATE_STUDENT,
     student
 })
-const _sortAlphabetically = (students) => ({
+const _sortAlphabetically = (students, aToZ) => ({
     type: SORT_ALPHABETICALLY,
-    students
+    students,
+    aToZ
 })
-const _sortByGpa = (students) => ({
+const _sortByGpa = (students, descending) => ({
     type: SORT_BY_GPA,
-    students
+    students,
+    descending
 })
 
 //thunks
@@ -66,14 +68,14 @@ export const updateStudent = (student, campus) => {
         dispatch(updateSingleStudent(updated))
     }
 }
-export const sortAlphabetically = (students) => {
+export const sortAlphabetically = (students, aToZ) => {
     return (dispatch) => {
-        dispatch(_sortAlphabetically(students))
+        dispatch(_sortAlphabetically(students, aToZ))
     }
 }
-export const sortByGpa = (students) => {
+export const sortByGpa = (students, descending) => {
     return (dispatch) => {
-        dispatch(_sortByGpa(students))
+        dispatch(_sortByGpa(students, descending))
     }
 }
  
@@ -88,10 +90,16 @@ export default (state = [], action) => {
         case UPDATE_STUDENT:
             return state.map(student => student.id === action.student.id ? action.student : student)
         case SORT_ALPHABETICALLY:
-            let sorted = [...action.students].sort((studentA,studentB) => studentA.lastName.localeCompare(studentB.lastName));
+            let sorted = [...action.students]
+            action.aToZ ? 
+                sorted = sorted.sort((studentA,studentB) => studentA.lastName.localeCompare(studentB.lastName))
+                : sorted = sorted.sort((studentA,studentB) => -studentA.lastName.localeCompare(studentB.lastName));
             return sorted
         case SORT_BY_GPA:
-            let gpaSorted = [...action.students].sort((studentA,studentB) => Number(studentB.gpa) - Number(studentA.gpa))
+            let gpaSorted = [...action.students]
+            action.descending ?
+                gpaSorted = gpaSorted.sort((studentA,studentB) => Number(studentB.gpa) - Number(studentA.gpa))
+                : gpaSorted = gpaSorted.sort((studentA,studentB) => Number(studentA.gpa) - Number(studentB.gpa))
             return gpaSorted
         default:
             return state
