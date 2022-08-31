@@ -8,6 +8,7 @@ import AllStudents from "./components/AllStudents";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCampuses } from "./store/campusesReducer";
 import { fetchStudents } from "./store/studentsReducer";
+import NotFound from "./components/NotFound";
 
 
 function App(){
@@ -48,6 +49,7 @@ function App(){
                 <Route path='/students' element={<AllStudents/>}/>
                 <Route path='/students/:id' element={<SingleStudent/>}/>
                 <Route path='/campuses/:id' element={<SingleCampus/>}/>
+                <Route path='*' element={<NotFound/>}/>
             </Routes>
         </>
     )

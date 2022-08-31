@@ -21,6 +21,7 @@ const _updateSingleStudent = (student) => ({
 //thunks
 export const fetchSingleStudent = (id) => {
     return async (dispatch) => {
+        // maybe need to wrap in a try/catch statement here to handle errors
         const {data: student} = await axios.get(`/api/students/${id}`);
         dispatch(_setSingleStudent(student))
     }
@@ -32,7 +33,6 @@ export const unmountSingleStudent = () => {
 }
 export const updateSingleStudent = (student) => {
     return (dispatch) => {
-        // const {data: updated} = await axios.put(`/api/students/${student.id}`)
         dispatch(_updateSingleStudent(student))
     }
 }
