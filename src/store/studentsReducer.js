@@ -5,6 +5,8 @@ const SET_STUDENTS = 'SET_STUDENTS';
 const CREATE_STUDENT = 'CREATE_STUDENT';
 const DELETE_STUDENT = 'DELETE_STUDENT';
 const UPDATE_STUDENT = 'UPDATE_STUDENT';
+const SORT_ALPHABETICALLY = 'SORT_ALPHABETICALLY';
+const SORT_BY_GPA = 'SORT_BY_GPA';
 
 //action creators
 const _setStudents = (students) => ({
@@ -22,6 +24,14 @@ const _deleteStudent = (student) => ({
 const _updateStudent = (student) => ({
     type: UPDATE_STUDENT,
     student
+})
+const _sortAlphabetically = (students) => ({
+    type: SORT_ALPHABETICALLY,
+    students
+})
+const _sortByGpa = (students) => ({
+    type: SORT_BY_GPA,
+    students
 })
 
 //thunks
@@ -56,7 +66,17 @@ export const updateStudent = (student, campus) => {
         dispatch(updateSingleStudent(updated))
     }
 }
-
+export const sortAlphabetically = (students) => {
+    return (dispatch) => {
+        dispatch(_sortAlphabetically(students))
+    }
+}
+export const sortByGpa = (students) => {
+    return (dispatch) => {
+        dispatch(_sortByGpa(students))
+    }
+}
+ 
 export default (state = [], action) => {
     switch (action.type) {
         case SET_STUDENTS:
@@ -67,6 +87,12 @@ export default (state = [], action) => {
             return state.filter(student => student.id !== action.student.id)
         case UPDATE_STUDENT:
             return state.map(student => student.id === action.student.id ? action.student : student)
+        case SORT_ALPHABETICALLY:
+            let sorted = [...action.students].sort((studentA,studentB) => studentA.lastName.localeCompare(studentB.lastName));
+            return sorted
+        case SORT_BY_GPA:
+            let gpaSorted = [...action.students].sort((studentA,studentB) => Number(studentB.gpa) - Number(studentA.gpa))
+            return gpaSorted
         default:
             return state
     }

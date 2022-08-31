@@ -28,7 +28,7 @@ const SingleStudent = () => {
         <div id='single-student-container'>
             <div id='student-info'>
                 <h1>{student.firstName + ' ' + student.lastName}</h1>
-                <img classname='student-img' src={student.imageUrl} height='200px' width='200px'/>
+                <img className='student-img' src={student.imageUrl} height='200px' width='200px'/>
                 <div id='student-details'>
                     <div><span className='tag'>{'Email: '}</span><span className="student-detail">{student.email}</span></div>
                     <div><span className='tag'>{'GPA: '}</span><span className="student-detail">{student.gpa ? student.gpa : 'N/A'}</span></div>

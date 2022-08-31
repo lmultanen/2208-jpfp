@@ -304,13 +304,9 @@ h4 {
 
 /*
 TODOS
-LOOK INTO HAVING DIFFERENT BACKGROUNDS FOR DIFFERENT COMPONENETS; ALSO LOOK INTO REPEATING BACKGROUNDS, ETC.
-PLAY AROUND WITH STYLING/COLOR SCHEMES A BIT MORE
 
 LOOK INTO SOME OF THE EXTRA CREDIT FUNCTIONALITY
---- add some detail/info to home page. could just be a couple sentences
-'Here at acme schools, we give you the tools to manage all your students across all of your campuses'
-'click on the links above in the nav bar to get started!'
+- for home page, could look into autoplaying carousel
 
 --- ordering could be next step, start with lastName sorting. then, can do gpa, then campuses
 - COULD ADD IN ORDERING OPTIONS FOR STUDENTS (NEED TO FIGURE OUT BEST WAY TO SORT); DEFAULT SHOULD BE LAST NAME SORTING

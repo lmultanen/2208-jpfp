@@ -2663,8 +2663,21 @@ var AllStudents = function AllStudents() {
   });
   react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
     dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_2__.fetchStudents)());
-  }, []); //for filtering, may need to clone the students array and filter/sort on that
+  }, []);
+
+  var alphabetSortHandler = function alphabetSortHandler() {
+    dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_2__.sortAlphabetically)(students)); // dispatch(fetchStudents());
+  };
+
+  var gpaSortHandler = function gpaSortHandler() {
+    dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_2__.sortByGpa)(students)); // dispatch(fetchStudents());
+  }; // sorting alphabetically works descending; may want to add functionality for other way?
+  // can make a new component with handling ordering once functionality written
+  // maybe can make these functions in the reducer; clicking on them will reorder the state
+  // that way, don't need to make a duplicate here.
+  //for filtering, may need to clone the students array and filter/sort on that
   //may want to look into how to sort alphabetically
+
 
   return students.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "list-form-container"
@@ -2686,7 +2699,13 @@ var AllStudents = function AllStudents() {
         return dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_2__.deleteStudent)(student.id));
       }
     }, "X")));
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Sort:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    type: "submit",
+    onClick: alphabetSortHandler
+  }, "last name alphabetically"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    type: "submit",
+    onClick: gpaSortHandler
+  }, "by gpa"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "student-form"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_NewStudentForm__WEBPACK_IMPORTED_MODULE_3__["default"], null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...");
 };
@@ -3196,7 +3215,7 @@ var SingleStudent = function SingleStudent() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "student-info"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, student.firstName + ' ' + student.lastName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    classname: "student-img",
+    className: "student-img",
     src: student.imageUrl,
     height: "200px",
     width: "200px"
@@ -4134,6 +4153,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
 /* harmony export */   "deleteStudent": () => (/* binding */ deleteStudent),
 /* harmony export */   "fetchStudents": () => (/* binding */ fetchStudents),
+/* harmony export */   "sortAlphabetically": () => (/* binding */ sortAlphabetically),
+/* harmony export */   "sortByGpa": () => (/* binding */ sortByGpa),
 /* harmony export */   "updateStudent": () => (/* binding */ updateStudent)
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
@@ -4164,7 +4185,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var SET_STUDENTS = 'SET_STUDENTS';
 var CREATE_STUDENT = 'CREATE_STUDENT';
 var DELETE_STUDENT = 'DELETE_STUDENT';
-var UPDATE_STUDENT = 'UPDATE_STUDENT'; //action creators
+var UPDATE_STUDENT = 'UPDATE_STUDENT';
+var SORT_ALPHABETICALLY = 'SORT_ALPHABETICALLY';
+var SORT_BY_GPA = 'SORT_BY_GPA'; //action creators
 
 var _setStudents = function _setStudents(students) {
   return {
@@ -4191,6 +4214,20 @@ var _updateStudent = function _updateStudent(student) {
   return {
     type: UPDATE_STUDENT,
     student: student
+  };
+};
+
+var _sortAlphabetically = function _sortAlphabetically(students) {
+  return {
+    type: SORT_ALPHABETICALLY,
+    students: students
+  };
+};
+
+var _sortByGpa = function _sortByGpa(students) {
+  return {
+    type: SORT_BY_GPA,
+    students: students
   };
 }; //thunks
 
@@ -4322,6 +4359,16 @@ var updateStudent = function updateStudent(student, campus) {
     };
   }();
 };
+var sortAlphabetically = function sortAlphabetically(students) {
+  return function (dispatch) {
+    dispatch(_sortAlphabetically(students));
+  };
+};
+var sortByGpa = function sortByGpa(students) {
+  return function (dispatch) {
+    dispatch(_sortByGpa(students));
+  };
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments.length > 1 ? arguments[1] : undefined;
@@ -4342,6 +4389,20 @@ var updateStudent = function updateStudent(student, campus) {
       return state.map(function (student) {
         return student.id === action.student.id ? action.student : student;
       });
+
+    case SORT_ALPHABETICALLY:
+      var sorted = _toConsumableArray(action.students).sort(function (studentA, studentB) {
+        return studentA.lastName.localeCompare(studentB.lastName);
+      });
+
+      return sorted;
+
+    case SORT_BY_GPA:
+      var gpaSorted = _toConsumableArray(action.students).sort(function (studentA, studentB) {
+        return Number(studentB.gpa) - Number(studentA.gpa);
+      });
+
+      return gpaSorted;
 
     default:
       return state;

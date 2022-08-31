@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteStudent, fetchStudents } from "../store/studentsReducer";
+import { deleteStudent, fetchStudents, sortAlphabetically, sortByGpa } from "../store/studentsReducer";
 import { Link } from "react-router-dom";
 import NewStudentForm from "./NewStudentForm";
 
@@ -11,6 +11,22 @@ const AllStudents = () => {
     React.useEffect(() => {
         dispatch(fetchStudents())
     },[])
+
+    const alphabetSortHandler = () => {
+        dispatch(sortAlphabetically(students));
+        // dispatch(fetchStudents());
+    }
+
+    const gpaSortHandler = () => {
+        dispatch(sortByGpa(students));
+        // dispatch(fetchStudents());
+    }
+
+    // sorting alphabetically works descending; may want to add functionality for other way?
+
+    // can make a new component with handling ordering once functionality written
+    // maybe can make these functions in the reducer; clicking on them will reorder the state
+    // that way, don't need to make a duplicate here.
 
     //for filtering, may need to clone the students array and filter/sort on that
     //may want to look into how to sort alphabetically
@@ -36,6 +52,11 @@ const AllStudents = () => {
                         )
                     })}
                 </ul>
+                <div>
+                    Sort:
+                    <button type='submit' onClick={alphabetSortHandler}>last name alphabetically</button>
+                    <button type='submit' onClick={gpaSortHandler}>by gpa</button>
+                </div>
             </div>
             <div id='student-form'>
                 <NewStudentForm/>
