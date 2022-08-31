@@ -311,13 +311,36 @@ h4 {
   margin: auto;
 }
 
+/* filtering footer */
+.activeFilter {
+  color: black;
+  font-weight: bold;
+  font-style: italic;
+}
+.notActive {
+  color: blue;
+  text-decoration: underline;
+}
+.filter-div > span {
+  margin-left: .5em;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+}
+.footer > * {
+  margin-bottom: .5em;
+}
+.filter-div > span:hover {
+  cursor: pointer;
+}
+
 /*
 TODOS
 
 LOOK INTO SOME OF THE EXTRA CREDIT FUNCTIONALITY
 - for home page, could look into autoplaying carousel
 
---- ordering could be next step, start with lastName sorting. then, can do gpa, then campuses
-- COULD ADD IN ORDERING OPTIONS FOR STUDENTS (NEED TO FIGURE OUT BEST WAY TO SORT); DEFAULT SHOULD BE LAST NAME SORTING
 - THEN, FILTERING SHOULD BE AN OPTION. ORDERING OPTIONS COULD GO IN A FOOTER MAYBE? FILTER OPTIONS TOO
 */

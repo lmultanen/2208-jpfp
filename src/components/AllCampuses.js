@@ -22,25 +22,29 @@ const AllCampuses = () => {
         <div id='list-form-container'>
             <div id='campuses-container'>
                 <h1>List of Campuses:</h1>
-                {campuses.map((campus, idx) => {
-                    return(
-                    <div className="campus" key={idx}>
-                        <div  className="link-and-delete">
-                            <h2 className="campus-name">
-                                <Link to={`/campuses/${campus.id}`} className='campus-name-link'>
-                                    {campus.name} 
-                                </Link> 
-                                <span className="enrollment-num">
-                                    {` (${campus.students.length} enrollments)`}
-                                </span> 
-                            </h2>
-                        
-                            <button className="delete" onClick={() => dispatch(deleteCampus(campus.id))}>X</button>
+                {campuses.length ?
+                    campuses.map((campus, idx) => {
+                        return(
+                        <div className="campus" key={idx}>
+                            <div  className="link-and-delete">
+                                <h2 className="campus-name">
+                                    <Link to={`/campuses/${campus.id}`} className='campus-name-link'>
+                                        {campus.name} 
+                                    </Link> 
+                                    <span className="enrollment-num">
+                                        {` (${campus.students.length} enrollments)`}
+                                    </span> 
+                                </h2>
+                            
+                                <button className="delete" onClick={() => dispatch(deleteCampus(campus.id))}>X</button>
+                            </div>
+                            <img src={campus.imageUrl} height='150px' width='150px'/>
                         </div>
-                        <img src={campus.imageUrl} height='150px' width='150px'/>
-                    </div>
-                    )
-                })}
+                        )
+                    })
+                    : <div>Loading...</div>
+                }
+                {/* may need to add another ternary for if length === 0; say nothing to display rather than loading */}
             </div>
             <div id='campus-form'>
                 <NewCampusForm/>

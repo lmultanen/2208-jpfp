@@ -6,13 +6,15 @@ import errorReducer from "./errorReducer";
 import singleCampusReducer from "./singleCampusReducer";
 import singleStudentReducer from "./singleStudentReducer";
 import studentsReducer from "./studentsReducer";
+import studentVisibilityReducer from "./studentVisibilityReducer";
 
 const reducer = combineReducers({
     campuses: campusesReducer,
     students: studentsReducer,
     singleCampus: singleCampusReducer,
     singleStudent: singleStudentReducer,
-    error: errorReducer
+    error: errorReducer,
+    studentVisibility: studentVisibilityReducer
 })
 
 

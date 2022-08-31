@@ -3,62 +3,58 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteStudent, fetchStudents, sortAlphabetically, sortByGpa } from "../store/studentsReducer";
 import { Link } from "react-router-dom";
 import NewStudentForm from "./NewStudentForm";
+import StudentFooter from "./StudentFooter";
+
+const SHOW_REGISTERED = 'SHOW_REGISTERED';
+const SHOW_UNREGISTERED = 'SHOW_UNREGISTERED';
 
 const AllStudents = () => {
     const dispatch = useDispatch()
     const students = useSelector(state => state.students)
-
-    //will pass these variables into reducer methods to determine whether to sort ascending or descending
-    const [lastNameAToZ, setLastNameAToZ] = React.useState(true);
-    const [gpaDescending, setGpaDescending] = React.useState(true)
+    const visibilityFilter = useSelector(state => state.studentVisibility)
 
     React.useEffect(() => {
         dispatch(fetchStudents())
     },[])
-
-    const alphabetSortHandler = () => {
-        dispatch(sortAlphabetically(students, lastNameAToZ));
-        setLastNameAToZ(!lastNameAToZ);
-        setGpaDescending(true);
-    }
-
-    const gpaSortHandler = () => {
-        dispatch(sortByGpa(students, gpaDescending));
-        setGpaDescending(!gpaDescending);
-        setLastNameAToZ(true);
-    }
 
     return( students ?
         <div id='list-form-container'>
             <div>
                 <h1>Current Students:</h1>
                     <ul id='student-list'>
-                    {students.map((student,idx) => {
-                        return(
-                        <li className="student" key={idx}>
-                            <div className="link-and-delete">
-                                <div>
-                                    <Link to={`/students/${student.id}`}>
-                                            {student.lastName + ', ' + student.firstName}             
-                                    </Link>
-                                    {student.campus ? <span className="attend-status">{' - attends ' + student.campus.name}</span> : <></>}
+                    {students.length ?
+                        students.filter(student => {
+                            switch (visibilityFilter) {
+                                case SHOW_REGISTERED:
+                                    return student.campus;
+                                case SHOW_UNREGISTERED:
+                                    return !student.campus;
+                                default:
+                                    return student;
+                            }
+                        })
+                          .map((student,idx) => {
+                            return(
+                            <li className="student" key={idx}>
+                                <div className="link-and-delete">
+                                    <div>
+                                        <Link to={`/students/${student.id}`}>
+                                                {student.lastName + ', ' + student.firstName}             
+                                        </Link>
+                                        {student.campus ? <span className="attend-status">{' - attends ' + student.campus.name}</span> : <></>}
+                                    </div>
+                                
+                                    <button className="delete" onClick={() => dispatch(deleteStudent(student.id))}>X</button>
                                 </div>
-                            
-                                <button className="delete" onClick={() => dispatch(deleteStudent(student.id))}>X</button>
-                            </div>
-                        </li>
-                        )
-                    })}
+                            </li>
+                            )
+                        })
+                        : <div>Loading...</div>
+                    }
                 </ul>
-
                 {students.length > 1 ?
-                    <div className="sort-div">
-                        <span>Sort:</span>
-                        <button type='submit' onClick={alphabetSortHandler}>{'by last name ' + (lastNameAToZ ? '(AtoZ)' : '(ZtoA)')}</button>
-                        <button type='submit' onClick={gpaSortHandler}>{'by gpa ' + (gpaDescending ? '(desc.)' : '(asc.)')}</button>
-                    </div>
-                    : <></>
-                }
+                    <StudentFooter/> :
+                    <></>}
             </div>
             <div id='student-form'>
                 <NewStudentForm/>
