@@ -25,7 +25,7 @@ nav {
   }
 
 .menu-link {
-    margin: 5px;
+    margin-left: 10px;
 }
 
 #list-form-container {
@@ -147,8 +147,8 @@ form > * {
   margin-left: .25em;
 }
 
-/* single student view */
-#single-student-container {
+/* single student and campus view */
+#single-student-container, #single-campus-container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -158,15 +158,79 @@ form > * {
   margin-left: auto;
   margin-right: auto;
 }
-#single-student-container > * {
+#single-student-container > *, #single-campus-container > * {
   margin: 1em;
   margin-left: auto;
   margin-right: auto;
 }
-
 #student-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 600px;
+  min-width: 200px;
+  border:#333333 solid;
+  padding: 1em;
+  background-color: aliceblue;
+}
+#student-details {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+
+#single-campus-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 600px;
+  min-width: 200px;
+  border:#333333 solid;
+  padding: 1em;
+  background-color: aliceblue;
+}
+#single-campus-details {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+#single-campus-details > *, #student-details > * {
+  margin: .25em
+}
+.tag {
+  font-weight: bold;
+  font-style: italic;
+  color:#463d3d
+}
+.campus-detail, .student-detail {
+  font-style: italic;
+  color:gray
+}
+
+/* single campus student list */
+.enrolled-students-list {
+  border:#333333 solid;
+  background-color:aliceblue;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  padding: .5em;
+}
+.enrolled-students-list > * {
   margin-left: auto;
   margin-right: auto;
+}
+.enrolled-students-list ul {
+  padding-left: 15px;
+}
+.student-unenroll-li {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+h4 {
+  margin-bottom: .5em;
 }
 
 #student-list {
@@ -177,8 +241,7 @@ form > * {
 }
 
 /*
-TODOS: CHANGE ENROLLED STUDENTS DISPLAY IN SINGLE CAMPUS COMPONENT; CLEAN IT UP, PROBABLY ALSO A FLEX DISPLAY
-CHANGE SINGLE CAMPUS AND SINGLE STUDENT DISPLAYS; WANT TO BE CENTERED
+TODOS
 LOOK INTO HAVING DIFFERENT BACKGROUNDS FOR DIFFERENT COMPONENETS; ALSO LOOK INTO REPEATING BACKGROUNDS, ETC.
 CHANGE THE DESCRIPTION INPUT FOR CAMPUS TO BE LONG FORM TEXT BOX
 PLAY AROUND WITH STYLING/COLOR SCHEMES A BIT MORE

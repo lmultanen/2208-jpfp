@@ -23,16 +23,19 @@ const SingleStudent = () => {
         <div id='single-student-container'>
             <div id='student-info'>
                 <h1>{student.firstName + ' ' + student.lastName}</h1>
-                <img src={student.imageUrl} height='200px' width='200px'/>
-                <div>{'Email: ' + student.email}</div>
-                <div>{'GPA: ' + (student.gpa ? student.gpa : 'N/A')}</div>
-                {/* <div>{'Campus: ' + (student.campusId ? <Link to={`/campuses/${student.campusId}`}>{student.campus.name}</Link> : "Not currently enrolled!")}</div> */}
-                {student.campusId && student.campus ?
-                    <div>{'Campus: '}
-                        <Link to={`/campuses/${student.campus.id}`}>{student.campus.name}</Link>
+                <img classname='student-img' src={student.imageUrl} height='200px' width='200px'/>
+                <div id='student-details'>
+                    <div><span className='tag'>{'Email: '}</span><span className="student-detail">{student.email}</span></div>
+                    <div><span className='tag'>{'GPA: '}</span><span className="student-detail">{student.gpa ? student.gpa : 'N/A'}</span></div>
+                    <div><span className='tag'>{'Campus: '}</span>
+                        {student.campusId && student.campus ?
+                            <span>
+                                <Link to={`/campuses/${student.campus.id}`}>{student.campus.name}</Link>
+                            </span>
+                            : <span className="student-detail">Not enrolled</span>
+                        }
                     </div>
-                    : <div>Campus: Not enrolled</div>
-                }
+                </div> 
             </div>
             <div id='update-student-form'>
                 <UpdateStudentForm/>
@@ -40,9 +43,6 @@ const SingleStudent = () => {
         </div>
         :  <div>Loading...</div>
     )
-    
-    // should put a navlink/link in the campus ternary statement
-    // can probably put student info in some sort of flex box container
 }
 
 export default SingleStudent;

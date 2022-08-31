@@ -53,17 +53,17 @@ const NewCampusForm = () => {
                 </label>
                 <input name='name' value={form.name} onChange={handleChange('name')}/>
 
-                <label htmlFor='imageUrl'>Campus Picture Url</label>
-                <input name='imageUrl' value={form.imageUrl} type='url' onChange={handleChange('imageUrl')}/>
-
-                <label htmlFor='description'>Description</label>
-                <input name='description' value={form.description} onChange={handleChange('description')}/>
-
                 <label htmlFor='address'>
                     Address
                     <span className='warning'>{form.address.length ? '' : 'Field required'}</span>
                 </label>
                 <input name='address' value={form.address} onChange={handleChange('address')}/>
+
+                <label htmlFor='imageUrl'>Campus Picture Url</label>
+                <input name='imageUrl' value={form.imageUrl} type='url' onChange={handleChange('imageUrl')}/>
+
+                <label htmlFor='description'>Description</label>
+                <textarea rows='4' name='description' value={form.description} onChange={handleChange('description')}/>
 
                 <button className="submit-button" type='submit' disabled={checkDisabled()}>Create New Campus</button>
             </form>

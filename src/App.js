@@ -30,13 +30,13 @@ function App(){
                         Home
                 </NavLink>
                 <NavLink 
-                    to='/campuses' 
+                    end to='/campuses' 
                     className='menu-link'
                     style={({isActive}) => ({color: isActive ? '#3380FF' : 'white'})}>
                         Campuses ({campuses.length})
                 </NavLink>
                 <NavLink 
-                    to='/students' 
+                    end to='/students' 
                     className='menu-link'
                     style={({isActive}) => ({color: isActive ? '#3380FF' : 'white'})}>
                         Students ({students.length})
