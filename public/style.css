@@ -5,13 +5,12 @@
 body::after {
   content: "";
   background: url('booksbg.jpg');
-  background-repeat: repeat;
   opacity: 0.1;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  position: absolute;
+  position: fixed;
   z-index: -1;
 }
 
@@ -246,14 +245,74 @@ h4 {
   color:#463d3d;
 }
 
+/* home page */
+#home-page-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2em;
+  align-content: center;
+}
+
+#welcome-page {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  max-width: 600px;
+  margin: auto;
+  margin-bottom: 2em;
+  border: #333333 solid;
+  padding: .5em;
+  background-color: aliceblue;
+}
+#welcome-page > *, #carousel {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1em;
+  text-align: center;
+}
+
+#carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  width: 100%;
+  padding: 1em;
+}
+
+#carousel:hover {
+  background-color: rgb(185, 217, 226);
+  opacity: .5;
+}
+
+#carousel > div {
+  display: flex;
+  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  scroll-snap-align: start;
+  scroll-behavior: smooth;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.carousel-img {
+  max-width: 400px;
+  margin: auto;
+}
+
 /*
 TODOS
 LOOK INTO HAVING DIFFERENT BACKGROUNDS FOR DIFFERENT COMPONENETS; ALSO LOOK INTO REPEATING BACKGROUNDS, ETC.
 PLAY AROUND WITH STYLING/COLOR SCHEMES A BIT MORE
 
 LOOK INTO SOME OF THE EXTRA CREDIT FUNCTIONALITY
-- COULD SPEND SOME TIME ADDING ERROR CHECKING FOR ROUTES
----- Have error routing catch all, need to add for improper indices for campuses, students
+--- add some detail/info to home page. could just be a couple sentences
+'Here at acme schools, we give you the tools to manage all your students across all of your campuses'
+'click on the links above in the nav bar to get started!'
+
+--- ordering could be next step, start with lastName sorting. then, can do gpa, then campuses
 - COULD ADD IN ORDERING OPTIONS FOR STUDENTS (NEED TO FIGURE OUT BEST WAY TO SORT); DEFAULT SHOULD BE LAST NAME SORTING
 - THEN, FILTERING SHOULD BE AN OPTION. ORDERING OPTIONS COULD GO IN A FOOTER MAYBE? FILTER OPTIONS TOO
 */

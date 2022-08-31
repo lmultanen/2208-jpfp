@@ -2507,6 +2507,8 @@ function App() {
     return state.students;
   });
   react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
+    // document.getElementsByTagName('body').style.backgroundImage = "url('booksbg.jpg')";
+    // document.body.style.backgroundImage = "url('booksbg.jpg')";
     dispatch((0,_store_campusesReducer__WEBPACK_IMPORTED_MODULE_7__.fetchCampuses)());
     dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_8__.fetchStudents)());
   }, []);
@@ -2709,7 +2711,22 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Home = function Home() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Welcome to Acme Schools");
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    id: "home-page-container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    id: "welcome-page"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Welcome to Acme Schools"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null, "Here at acme schools, we provide you with the tools to manage all of your students across all of your campuses."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h4", null, "Please use the links above in the nav bar to get started!")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    id: "carousel"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: "carousel-img",
+    src: "learn.jpg"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: "carousel-img",
+    src: "teachapple.jpg"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: "carousel-img",
+    src: "grow.jpg"
+  }))));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Home);
