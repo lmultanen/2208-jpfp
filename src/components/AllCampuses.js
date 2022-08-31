@@ -46,7 +46,7 @@ const AllCampuses = () => {
                 <NewCampusForm/>
                 {campuses.length > 1 ? 
                     <div className="sort-div">
-                        <button type='submit' onClick={sortByStudentsHandler}>Sort by enrollment</button>
+                        <button type='submit' onClick={sortByStudentsHandler}>{'Sort by enrollment ' + (sortStudentsDescending ? '(desc.)':'(asc.)')}</button>
                     </div>
                     : <></>
                 }

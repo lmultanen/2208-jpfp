@@ -54,8 +54,8 @@ const AllStudents = () => {
                 {students.length > 1 ?
                     <div className="sort-div">
                         <span>Sort:</span>
-                        <button type='submit' onClick={alphabetSortHandler}>by last name</button>
-                        <button type='submit' onClick={gpaSortHandler}>by gpa</button>
+                        <button type='submit' onClick={alphabetSortHandler}>{'by last name ' + (lastNameAToZ ? '(AtoZ)' : '(ZtoA)')}</button>
+                        <button type='submit' onClick={gpaSortHandler}>{'by gpa ' + (gpaDescending ? '(desc.)' : '(asc.)')}</button>
                     </div>
                     : <></>
                 }
