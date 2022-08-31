@@ -1,31 +1,34 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
+import { clearError } from "../store/errorReducer";
 import { fetchSingleCampus, unenrollStudentFromCampus, unmountSingleCampus } from "../store/singleCampusReducer";
+import NotFound from "./NotFound";
 import UpdateCampusForm from "./UpdateCampusForm";
 
 const SingleCampus = () => {
     const dispatch = useDispatch();
     const campus = useSelector(state => state.singleCampus);
     const params = useParams();
+    const error = useSelector(state => state.error);
 
     React.useEffect(() => {
         dispatch(fetchSingleCampus(params.id))
         return () => {
             dispatch(unmountSingleCampus())
+            dispatch(clearError())
         }
     },[])
 
-    // sometimes works, sometimes needs two clicks...
     const unenrollClickHandler = (studentId) => {
         dispatch(unenrollStudentFromCampus(studentId, params.id))
         dispatch(fetchSingleCampus(params.id))
     }
 
-    // should put some classNames, etc in each section to better style later
-    // will need to refactor this and SingleStu; combine with Update forms to match wireframe images
-
-    return ( campus.name ?
+    return ( error ?
+        <NotFound type={'campus'}/>
+        :
+        (campus.name ?
         <div id='single-campus-container'>
             <div id='single-campus-info'>
                 <h1>{campus.name}</h1>
@@ -48,7 +51,7 @@ const SingleCampus = () => {
                                         <Link to={`/students/${student.id}`}>
                                             {student.lastName + ', ' + student.firstName}
                                         </Link>
-                                        <button className="unenroll-button" type='submit' onClick={() => unenrollClickHandler(student.id)}>Unenroll Student</button>
+                                        <button className="unenroll-button" type='submit' onClick={() => unenrollClickHandler(student.id)}>Unregister</button>
                                     </div>
                                 </li>
                             )
@@ -56,7 +59,7 @@ const SingleCampus = () => {
                 : "No students currently enrolled"}
             </div>
         </div>
-        : <div>Loading...</div>
+        : <div>Loading...</div>)
     )
 }
 

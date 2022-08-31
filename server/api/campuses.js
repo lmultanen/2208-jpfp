@@ -22,6 +22,9 @@ router.get('/:id', async (req,res,next) => {
                 model: Student
             }
         });
+        if (campus === null) {
+            res.status(404).send('Campus Not Found')
+        }
         res.send(campus);
     } catch (err) {
         next(err)

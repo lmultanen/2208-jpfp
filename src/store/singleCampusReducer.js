@@ -1,4 +1,5 @@
 import axios from "axios";
+import { setError } from "./errorReducer";
 
 const SET_SINGLE_CAMPUS = 'SET_SINGLE_CAMPUS';
 const UNMOUNT_SINGLE_CAMPUS = 'UNMOUNT_SINGLE_CAMPUS';
@@ -26,8 +27,13 @@ const _unenrollStudentFromCampus = (campus) => ({
 //thunks
 export const fetchSingleCampus = (id) => {
     return async (dispatch) => {
-        const {data: campus} = await axios.get(`/api/campuses/${id}`);
-        dispatch(_setSingleCampus(campus))
+        try {
+            const {data: campus} = await axios.get(`/api/campuses/${id}`);
+            dispatch(_setSingleCampus(campus))
+        } catch(err) {
+            dispatch(setError())
+        }
+        
     }
 }
 export const unmountSingleCampus = () => {

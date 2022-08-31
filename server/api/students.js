@@ -22,8 +22,7 @@ router.get('/:id', async (req,res,next) => {
                 model: Campus
             }});
         if (student === null) {
-            console.log('STUDENT IS NULL, SHOULD SEND ERROR PAGE')
-            res.status(404).send('NotFound')
+            res.status(404).send('Student Not Found')
         }
         res.send(student)
     } catch (err) {

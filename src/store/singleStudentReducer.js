@@ -1,4 +1,5 @@
 import axios from "axios";
+import { setError } from "./errorReducer";
 
 const SET_SINGLE_STUDENT = 'SET_SINGLE_STUDENT';
 const UNMOUNT_SINGLE_STUDENT = 'UNMOUNT_SINGLE_STUDENT';
@@ -21,9 +22,12 @@ const _updateSingleStudent = (student) => ({
 //thunks
 export const fetchSingleStudent = (id) => {
     return async (dispatch) => {
-        // maybe need to wrap in a try/catch statement here to handle errors
-        const {data: student} = await axios.get(`/api/students/${id}`);
-        dispatch(_setSingleStudent(student))
+        try {
+            const {data: student} = await axios.get(`/api/students/${id}`);
+            dispatch(_setSingleStudent(student))
+        } catch (err) {
+            dispatch(setError())
+        }
     }
 }
 export const unmountSingleStudent = () => {

@@ -2,24 +2,29 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import { fetchCampuses } from "../store/campusesReducer";
+import { clearError } from "../store/errorReducer";
 import { fetchSingleStudent, unmountSingleStudent } from "../store/singleStudentReducer";
+import NotFound from "./NotFound";
 import UpdateStudentForm from "./UpdateStudentForm";
 
 const SingleStudent = () => {
     const dispatch = useDispatch();
     const student = useSelector(state => state.singleStudent)
+    const error = useSelector(state => state.error)
     const params = useParams();
 
     React.useEffect(() => {
         dispatch(fetchSingleStudent(params.id))
         return () => {
             dispatch(unmountSingleStudent())
+            dispatch(clearError())
         }
     },[])
 
-    // checking for firstName to exist so that not displaying 'undefined' while loading
-    // also prevents undefined fields if student doesn't exist; will handle that case later
-    return( student.firstName ?
+    return( error ?
+        <NotFound type={'student'}/>
+        :
+        (student.firstName ?
         <div id='single-student-container'>
             <div id='student-info'>
                 <h1>{student.firstName + ' ' + student.lastName}</h1>
@@ -41,7 +46,7 @@ const SingleStudent = () => {
                 <UpdateStudentForm/>
             </div>
         </div>
-        :  <div>Loading...</div>
+        :  <div>Loading...</div>)
     )
 }
 
