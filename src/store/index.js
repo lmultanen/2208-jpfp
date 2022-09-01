@@ -2,6 +2,7 @@ import {createStore, applyMiddleware, combineReducers} from "redux";
 import loggingMiddleware from 'redux-logger'
 import thunk from "redux-thunk";
 import campusesReducer from "./campusesReducer";
+import campusVisibilityReducer from "./campusVisibilityReducer";
 import errorReducer from "./errorReducer";
 import singleCampusReducer from "./singleCampusReducer";
 import singleStudentReducer from "./singleStudentReducer";
@@ -14,7 +15,8 @@ const reducer = combineReducers({
     singleCampus: singleCampusReducer,
     singleStudent: singleStudentReducer,
     error: errorReducer,
-    studentVisibility: studentVisibilityReducer
+    studentVisibility: studentVisibilityReducer,
+    campusVisibility: campusVisibilityReducer
 })
 
 

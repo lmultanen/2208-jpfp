@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteStudent, fetchStudents, sortAlphabetically, sortByGpa } from "../store/studentsReducer";
 import { Link } from "react-router-dom";
@@ -12,9 +12,11 @@ const AllStudents = () => {
     const dispatch = useDispatch()
     const students = useSelector(state => state.students)
     const visibilityFilter = useSelector(state => state.studentVisibility)
+    const [loaded, setLoaded] = useState(false)
 
     React.useEffect(() => {
         dispatch(fetchStudents())
+        setLoaded(true)
     },[])
 
     return( students ?
@@ -42,6 +44,7 @@ const AllStudents = () => {
                                                 {student.lastName + ', ' + student.firstName}             
                                         </Link>
                                         {student.campus ? <span className="attend-status">{' - attends ' + student.campus.name}</span> : <></>}
+                                        <div className="GPA">{`GPA: (${student.gpa})`}</div>
                                     </div>
                                 
                                     <button className="delete" onClick={() => dispatch(deleteStudent(student.id))}>X</button>
@@ -49,7 +52,10 @@ const AllStudents = () => {
                             </li>
                             )
                         })
-                        : <div>Loading...</div>
+                        :
+                        (students.length === 0 && loaded) ?
+                        <div>No students to display</div> :
+                        <div>Loading...</div>
                     }
                 </ul>
                 {students.length > 1 ?

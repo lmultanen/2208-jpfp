@@ -140,7 +140,7 @@ form > * {
   align-items: center;
 }
 
-.attend-status, .enrollment-num {
+.attend-status, .enrollment-num, .GPA {
   color: grey;
   font-style: italic;
   margin-left: .25em;

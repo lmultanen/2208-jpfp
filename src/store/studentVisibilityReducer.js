@@ -15,7 +15,6 @@ export const setStudentVisibilityFilter = (filter) => {
 export default (state = SHOW_ALL, action) => {
     switch (action.type) {
         case SET_STUDENT_VISIBILITY_FILTER:
-            console.log('in visibility reducer, action is', action.filter)
             return action.filter;
         default:
             return state;

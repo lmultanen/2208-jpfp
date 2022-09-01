@@ -2580,9 +2580,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
 /* harmony import */ var _store_campusesReducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/campusesReducer */ "./src/store/campusesReducer.js");
-/* harmony import */ var _NewCampusForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NewCampusForm */ "./src/components/NewCampusForm.js");
+/* harmony import */ var _CampusFooter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CampusFooter */ "./src/components/CampusFooter.js");
+/* harmony import */ var _NewCampusForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NewCampusForm */ "./src/components/NewCampusForm.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -2601,31 +2602,43 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+var SHOW_HAS_STUDENTS = 'SHOW_HAS_STUDENTS';
+var SHOW_NO_STUDENTS = 'SHOW_NO_STUDENTS';
+
 var AllCampuses = function AllCampuses() {
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   var campuses = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
     return state.campuses;
   });
+  var visibilityFilter = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
+    return state.campusVisibility;
+  });
 
-  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0___default().useState(true),
+  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0___default().useState(false),
       _React$useState2 = _slicedToArray(_React$useState, 2),
-      sortStudentsDescending = _React$useState2[0],
-      setSortStudentsDescending = _React$useState2[1];
+      loaded = _React$useState2[0],
+      setLoaded = _React$useState2[1];
 
   react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
     dispatch((0,_store_campusesReducer__WEBPACK_IMPORTED_MODULE_2__.fetchCampuses)());
+    setLoaded(true);
   }, []);
-
-  var sortByStudentsHandler = function sortByStudentsHandler() {
-    dispatch((0,_store_campusesReducer__WEBPACK_IMPORTED_MODULE_2__.sortByStudents)(campuses, sortStudentsDescending));
-    setSortStudentsDescending(!sortStudentsDescending);
-  };
-
   return campuses ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "list-form-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "campuses-container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "List of Campuses:"), campuses.length ? campuses.map(function (campus, idx) {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "List of Campuses:"), campuses.length ? campuses.filter(function (campus) {
+    switch (visibilityFilter) {
+      case SHOW_HAS_STUDENTS:
+        return campus.students.length;
+
+      case SHOW_NO_STUDENTS:
+        return !campus.students.length;
+
+      default:
+        return campus;
+    }
+  }).map(function (campus, idx) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       className: "campus",
       key: idx
@@ -2633,7 +2646,7 @@ var AllCampuses = function AllCampuses() {
       className: "link-and-delete"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
       className: "campus-name"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
       to: "/campuses/".concat(campus.id),
       className: "campus-name-link"
     }, campus.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
@@ -2648,14 +2661,9 @@ var AllCampuses = function AllCampuses() {
       height: "150px",
       width: "150px"
     }));
-  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }) : campuses.length === 0 && loaded ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "No campuses to display") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "campus-form"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_NewCampusForm__WEBPACK_IMPORTED_MODULE_3__["default"], null), campuses.length > 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "sort-div"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    type: "submit",
-    onClick: sortByStudentsHandler
-  }, 'Sort by enrollment ' + (sortStudentsDescending ? '(desc.)' : '(asc.)'))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...");
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_NewCampusForm__WEBPACK_IMPORTED_MODULE_4__["default"], null), campuses.length > 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_CampusFooter__WEBPACK_IMPORTED_MODULE_3__["default"], null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...");
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AllCampuses);
@@ -2680,6 +2688,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
 /* harmony import */ var _NewStudentForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NewStudentForm */ "./src/components/NewStudentForm.js");
 /* harmony import */ var _StudentFooter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./StudentFooter */ "./src/components/StudentFooter.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -2697,8 +2717,15 @@ var AllStudents = function AllStudents() {
   var visibilityFilter = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
     return state.studentVisibility;
   });
+
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      loaded = _useState2[0],
+      setLoaded = _useState2[1];
+
   react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
     dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_2__.fetchStudents)());
+    setLoaded(true);
   }, []);
   return students ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "list-form-container"
@@ -2725,18 +2752,112 @@ var AllStudents = function AllStudents() {
       to: "/students/".concat(student.id)
     }, student.lastName + ', ' + student.firstName), student.campus ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
       className: "attend-status"
-    }, ' - attends ' + student.campus.name) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    }, ' - attends ' + student.campus.name) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      className: "GPA"
+    }, "GPA: (".concat(student.gpa, ")"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
       className: "delete",
       onClick: function onClick() {
         return dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_2__.deleteStudent)(student.id));
       }
     }, "X")));
-  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...")), students.length > 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StudentFooter__WEBPACK_IMPORTED_MODULE_4__["default"], null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }) : students.length === 0 && loaded ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "No students to display") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...")), students.length > 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StudentFooter__WEBPACK_IMPORTED_MODULE_4__["default"], null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "student-form"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_NewStudentForm__WEBPACK_IMPORTED_MODULE_3__["default"], null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...");
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AllStudents);
+
+/***/ }),
+
+/***/ "./src/components/CampusFooter.js":
+/*!****************************************!*\
+  !*** ./src/components/CampusFooter.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _store_campusesReducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/campusesReducer */ "./src/store/campusesReducer.js");
+/* harmony import */ var _store_campusVisibilityReducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/campusVisibilityReducer */ "./src/store/campusVisibilityReducer.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+var SHOW_ALL = 'SHOW_ALL';
+var SHOW_HAS_STUDENTS = 'SHOW_HAS_STUDENTS';
+var SHOW_NO_STUDENTS = 'SHOW_NO_STUDENTS';
+
+var CampusFooter = function CampusFooter() {
+  var visibilityFilter = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
+    return state.campusVisibility;
+  });
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
+  var campuses = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
+    return state.campuses;
+  });
+
+  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0___default().useState(true),
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      sortStudentsDescending = _React$useState2[0],
+      setSortStudentsDescending = _React$useState2[1];
+
+  react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
+    return function () {
+      dispatch((0,_store_campusVisibilityReducer__WEBPACK_IMPORTED_MODULE_3__.setCampusVisibilityFilter)(SHOW_ALL));
+    };
+  }, []);
+
+  var sortByStudentsHandler = function sortByStudentsHandler() {
+    dispatch((0,_store_campusesReducer__WEBPACK_IMPORTED_MODULE_2__.sortByStudents)(campuses, sortStudentsDescending));
+    setSortStudentsDescending(!sortStudentsDescending);
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "footer"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "sort-div"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    type: "submit",
+    onClick: sortByStudentsHandler
+  }, 'Sort by enrollment ' + (sortStudentsDescending ? '(desc.)' : '(asc.)'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "filter-div"
+  }, 'Show: ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: visibilityFilter === SHOW_ALL ? 'activeFilter' : 'notActive',
+    onClick: function onClick() {
+      return dispatch((0,_store_campusVisibilityReducer__WEBPACK_IMPORTED_MODULE_3__.setCampusVisibilityFilter)(SHOW_ALL));
+    }
+  }, "All"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: visibilityFilter === SHOW_HAS_STUDENTS ? 'activeFilter' : 'notActive',
+    onClick: function onClick() {
+      return dispatch((0,_store_campusVisibilityReducer__WEBPACK_IMPORTED_MODULE_3__.setCampusVisibilityFilter)(SHOW_HAS_STUDENTS));
+    }
+  }, "Has Students"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: visibilityFilter === SHOW_NO_STUDENTS ? 'activeFilter' : 'notActive',
+    onClick: function onClick() {
+      return dispatch((0,_store_campusVisibilityReducer__WEBPACK_IMPORTED_MODULE_3__.setCampusVisibilityFilter)(SHOW_NO_STUDENTS));
+    }
+  }, "No Students")));
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CampusFooter);
 
 /***/ }),
 
@@ -3373,7 +3494,7 @@ var StudentFooter = function StudentFooter() {
   }, "Unregistered")));
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (StudentFooter);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (StudentFooter); // add campus filtering now
 
 /***/ }),
 
@@ -3667,6 +3788,48 @@ var UpdateStudentForm = function UpdateStudentForm() {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (UpdateStudentForm);
+
+/***/ }),
+
+/***/ "./src/store/campusVisibilityReducer.js":
+/*!**********************************************!*\
+  !*** ./src/store/campusVisibilityReducer.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "setCampusVisibilityFilter": () => (/* binding */ setCampusVisibilityFilter)
+/* harmony export */ });
+var SHOW_ALL = 'SHOW_ALL';
+var SET_CAMPUS_VISIBILITY_FILTER = 'SET_CAMPUS_VISIBILITY_FILTER';
+
+var _setCampusVisibilityFilter = function _setCampusVisibilityFilter(filter) {
+  return {
+    type: SET_CAMPUS_VISIBILITY_FILTER,
+    filter: filter
+  };
+};
+
+var setCampusVisibilityFilter = function setCampusVisibilityFilter(filter) {
+  return function (dispatch) {
+    dispatch(_setCampusVisibilityFilter(filter));
+  };
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : SHOW_ALL;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case SET_CAMPUS_VISIBILITY_FILTER:
+      return action.filter;
+
+    default:
+      return state;
+  }
+});
 
 /***/ }),
 
@@ -3976,16 +4139,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux-logger */ "./node_modules/redux-logger/dist/redux-logger.js");
 /* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(redux_logger__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
+/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
 /* harmony import */ var _campusesReducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./campusesReducer */ "./src/store/campusesReducer.js");
-/* harmony import */ var _errorReducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./errorReducer */ "./src/store/errorReducer.js");
-/* harmony import */ var _singleCampusReducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./singleCampusReducer */ "./src/store/singleCampusReducer.js");
-/* harmony import */ var _singleStudentReducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./singleStudentReducer */ "./src/store/singleStudentReducer.js");
-/* harmony import */ var _studentsReducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./studentsReducer */ "./src/store/studentsReducer.js");
-/* harmony import */ var _studentVisibilityReducer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./studentVisibilityReducer */ "./src/store/studentVisibilityReducer.js");
+/* harmony import */ var _campusVisibilityReducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./campusVisibilityReducer */ "./src/store/campusVisibilityReducer.js");
+/* harmony import */ var _errorReducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./errorReducer */ "./src/store/errorReducer.js");
+/* harmony import */ var _singleCampusReducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./singleCampusReducer */ "./src/store/singleCampusReducer.js");
+/* harmony import */ var _singleStudentReducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./singleStudentReducer */ "./src/store/singleStudentReducer.js");
+/* harmony import */ var _studentsReducer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./studentsReducer */ "./src/store/studentsReducer.js");
+/* harmony import */ var _studentVisibilityReducer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./studentVisibilityReducer */ "./src/store/studentVisibilityReducer.js");
 
 
 
@@ -3995,18 +4159,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var reducer = (0,redux__WEBPACK_IMPORTED_MODULE_7__.combineReducers)({
+
+var reducer = (0,redux__WEBPACK_IMPORTED_MODULE_8__.combineReducers)({
   campuses: _campusesReducer__WEBPACK_IMPORTED_MODULE_1__["default"],
-  students: _studentsReducer__WEBPACK_IMPORTED_MODULE_5__["default"],
-  singleCampus: _singleCampusReducer__WEBPACK_IMPORTED_MODULE_3__["default"],
-  singleStudent: _singleStudentReducer__WEBPACK_IMPORTED_MODULE_4__["default"],
-  error: _errorReducer__WEBPACK_IMPORTED_MODULE_2__["default"],
-  studentVisibility: _studentVisibilityReducer__WEBPACK_IMPORTED_MODULE_6__["default"]
+  students: _studentsReducer__WEBPACK_IMPORTED_MODULE_6__["default"],
+  singleCampus: _singleCampusReducer__WEBPACK_IMPORTED_MODULE_4__["default"],
+  singleStudent: _singleStudentReducer__WEBPACK_IMPORTED_MODULE_5__["default"],
+  error: _errorReducer__WEBPACK_IMPORTED_MODULE_3__["default"],
+  studentVisibility: _studentVisibilityReducer__WEBPACK_IMPORTED_MODULE_7__["default"],
+  campusVisibility: _campusVisibilityReducer__WEBPACK_IMPORTED_MODULE_2__["default"]
 });
 
 function configureStore() {
   // return createStore(########, applyMiddleware(thunk));
-  return (0,redux__WEBPACK_IMPORTED_MODULE_7__.createStore)(reducer, (0,redux__WEBPACK_IMPORTED_MODULE_7__.applyMiddleware)(redux_thunk__WEBPACK_IMPORTED_MODULE_8__["default"], (redux_logger__WEBPACK_IMPORTED_MODULE_0___default())));
+  return (0,redux__WEBPACK_IMPORTED_MODULE_8__.createStore)(reducer, (0,redux__WEBPACK_IMPORTED_MODULE_8__.applyMiddleware)(redux_thunk__WEBPACK_IMPORTED_MODULE_9__["default"], (redux_logger__WEBPACK_IMPORTED_MODULE_0___default())));
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (configureStore);
@@ -4334,7 +4500,6 @@ var setStudentVisibilityFilter = function setStudentVisibilityFilter(filter) {
 
   switch (action.type) {
     case SET_STUDENT_VISIBILITY_FILTER:
-      console.log('in visibility reducer, action is', action.filter);
       return action.filter;
 
     default:

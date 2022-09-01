@@ -1,29 +1,40 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { deleteCampus, fetchCampuses, sortByStudents } from "../store/campusesReducer";
+import { deleteCampus, fetchCampuses } from "../store/campusesReducer";
+import CampusFooter from "./CampusFooter";
 import NewCampusForm from "./NewCampusForm";
+
+const SHOW_HAS_STUDENTS = 'SHOW_HAS_STUDENTS';
+const SHOW_NO_STUDENTS = 'SHOW_NO_STUDENTS';
 
 const AllCampuses = () => {
     const dispatch = useDispatch();
     const campuses = useSelector(state => state.campuses)
-    const [sortStudentsDescending, setSortStudentsDescending] = React.useState(true);
+    const visibilityFilter = useSelector(state => state.campusVisibility)
+    const [loaded, setLoaded] = React.useState(false)
 
     React.useEffect(() => {
         dispatch(fetchCampuses())
+        setLoaded(true)
     },[])
-
-    const sortByStudentsHandler = () => {
-        dispatch(sortByStudents(campuses, sortStudentsDescending));
-        setSortStudentsDescending(!sortStudentsDescending)
-    }
 
     return( campuses ?
         <div id='list-form-container'>
             <div id='campuses-container'>
                 <h1>List of Campuses:</h1>
                 {campuses.length ?
-                    campuses.map((campus, idx) => {
+                    campuses.filter(campus => {
+                        switch (visibilityFilter) {
+                            case SHOW_HAS_STUDENTS:
+                                return campus.students.length;
+                            case SHOW_NO_STUDENTS:
+                                return !campus.students.length;
+                            default:
+                                return campus;
+                        }
+                    })
+                      .map((campus, idx) => {
                         return(
                         <div className="campus" key={idx}>
                             <div  className="link-and-delete">
@@ -42,16 +53,16 @@ const AllCampuses = () => {
                         </div>
                         )
                     })
-                    : <div>Loading...</div>
+                    : 
+                    (campuses.length === 0 && loaded) ?
+                    <div>No campuses to display</div> :
+                    <div>Loading...</div>
                 }
-                {/* may need to add another ternary for if length === 0; say nothing to display rather than loading */}
             </div>
             <div id='campus-form'>
                 <NewCampusForm/>
                 {campuses.length > 1 ? 
-                    <div className="sort-div">
-                        <button type='submit' onClick={sortByStudentsHandler}>{'Sort by enrollment ' + (sortStudentsDescending ? '(desc.)':'(asc.)')}</button>
-                    </div>
+                    <CampusFooter/>
                     : <></>
                 }
             </div>
