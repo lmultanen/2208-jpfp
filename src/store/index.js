@@ -21,7 +21,6 @@ const reducer = combineReducers({
 
 
 function configureStore() {
-    // return createStore(########, applyMiddleware(thunk));
     return createStore(reducer, applyMiddleware(thunk, loggingMiddleware))
 }
 

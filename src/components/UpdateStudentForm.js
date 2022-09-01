@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchCampuses } from "../store/campusesReducer";
 import { fetchSingleStudent } from "../store/singleStudentReducer";
 import { updateStudent } from "../store/studentsReducer";
 
@@ -20,13 +19,7 @@ const UpdateStudentForm = () => {
     const campuses = useSelector(state => state.campuses)
 
     React.useEffect(() => {
-        //duplicating code with SingleStudent component; probably unneccessary
-        //don't think I need to unmount though, since SingleStudent already taking care of that
         setForm(student);
-    },[])
-
-    React.useEffect(() => {
-        dispatch(fetchCampuses());
     },[])
 
     const handleSubmit = (event) => {

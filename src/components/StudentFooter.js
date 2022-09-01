@@ -62,5 +62,3 @@ const StudentFooter = () => {
 }
 
 export default StudentFooter;
-
-// add campus filtering now

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteStudent, fetchStudents, sortAlphabetically, sortByGpa } from "../store/studentsReducer";
+import { deleteStudent, fetchStudents } from "../store/studentsReducer";
 import { Link } from "react-router-dom";
 import NewStudentForm from "./NewStudentForm";
 import StudentFooter from "./StudentFooter";

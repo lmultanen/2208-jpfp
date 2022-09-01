@@ -1,6 +1,5 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCampuses } from "../store/campusesReducer";
 import { createStudent } from "../store/studentsReducer";
 
 const NewStudentForm = () => {
@@ -16,10 +15,6 @@ const NewStudentForm = () => {
 
     const [form, setForm] = React.useState(blankForm);
     const campuses = useSelector(state => state.campuses)
-
-    React.useEffect(() => {
-        dispatch(fetchCampuses())
-    },[])
 
     const handleSubmit = (event) => {
         event.preventDefault();

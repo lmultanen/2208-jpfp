@@ -17,8 +17,6 @@ function App(){
     const students = useSelector(state => state.students)
 
     React.useEffect(() => {
-        // document.getElementsByTagName('body').style.backgroundImage = "url('booksbg.jpg')";
-        // document.body.style.backgroundImage = "url('booksbg.jpg')";
         dispatch(fetchCampuses());
         dispatch(fetchStudents());
     },[])

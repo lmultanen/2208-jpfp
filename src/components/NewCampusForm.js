@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { createCampus, fetchCampuses } from "../store/campusesReducer";
+import { createCampus } from "../store/campusesReducer";
 
 const NewCampusForm = () => {
     const dispatch = useDispatch()
@@ -42,7 +42,6 @@ const NewCampusForm = () => {
         return (!form.address.length || !form.name.length);
     }
     
-
     return(
         <div id='form-container'>
             <h1>Add New Campus:</h1>

@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
-import { fetchCampuses } from "../store/campusesReducer";
 import { clearError } from "../store/errorReducer";
 import { fetchSingleStudent, unmountSingleStudent } from "../store/singleStudentReducer";
 import NotFound from "./NotFound";

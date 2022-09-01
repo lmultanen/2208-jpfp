@@ -2507,8 +2507,6 @@ function App() {
     return state.students;
   });
   react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
-    // document.getElementsByTagName('body').style.backgroundImage = "url('booksbg.jpg')";
-    // document.body.style.backgroundImage = "url('booksbg.jpg')";
     dispatch((0,_store_campusesReducer__WEBPACK_IMPORTED_MODULE_7__.fetchCampuses)());
     dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_8__.fetchStudents)());
   }, []);
@@ -3037,8 +3035,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _store_campusesReducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/campusesReducer */ "./src/store/campusesReducer.js");
-/* harmony import */ var _store_studentsReducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/studentsReducer */ "./src/store/studentsReducer.js");
+/* harmony import */ var _store_studentsReducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/studentsReducer */ "./src/store/studentsReducer.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -3056,7 +3053,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 
 
 
@@ -3080,15 +3076,12 @@ var NewStudentForm = function NewStudentForm() {
   var campuses = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
     return state.campuses;
   });
-  react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
-    dispatch((0,_store_campusesReducer__WEBPACK_IMPORTED_MODULE_2__.fetchCampuses)());
-  }, []);
 
   var handleSubmit = function handleSubmit(event) {
     event.preventDefault();
     var submissionForm = removeEmptyProps();
     var selectedCampus = getSelectedCampus();
-    dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_3__.createStudent)(submissionForm, selectedCampus));
+    dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_2__.createStudent)(submissionForm, selectedCampus));
     setForm(blankForm);
   };
 
@@ -3325,14 +3318,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
-/* harmony import */ var _store_campusesReducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/campusesReducer */ "./src/store/campusesReducer.js");
-/* harmony import */ var _store_errorReducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/errorReducer */ "./src/store/errorReducer.js");
-/* harmony import */ var _store_singleStudentReducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../store/singleStudentReducer */ "./src/store/singleStudentReducer.js");
-/* harmony import */ var _NotFound__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NotFound */ "./src/components/NotFound.js");
-/* harmony import */ var _UpdateStudentForm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./UpdateStudentForm */ "./src/components/UpdateStudentForm.js");
-
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var _store_errorReducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/errorReducer */ "./src/store/errorReducer.js");
+/* harmony import */ var _store_singleStudentReducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/singleStudentReducer */ "./src/store/singleStudentReducer.js");
+/* harmony import */ var _NotFound__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NotFound */ "./src/components/NotFound.js");
+/* harmony import */ var _UpdateStudentForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./UpdateStudentForm */ "./src/components/UpdateStudentForm.js");
 
 
 
@@ -3349,15 +3340,15 @@ var SingleStudent = function SingleStudent() {
   var error = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
     return state.error;
   });
-  var params = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useParams)();
+  var params = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useParams)();
   react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
-    dispatch((0,_store_singleStudentReducer__WEBPACK_IMPORTED_MODULE_4__.fetchSingleStudent)(params.id));
+    dispatch((0,_store_singleStudentReducer__WEBPACK_IMPORTED_MODULE_3__.fetchSingleStudent)(params.id));
     return function () {
-      dispatch((0,_store_singleStudentReducer__WEBPACK_IMPORTED_MODULE_4__.unmountSingleStudent)());
-      dispatch((0,_store_errorReducer__WEBPACK_IMPORTED_MODULE_3__.clearError)());
+      dispatch((0,_store_singleStudentReducer__WEBPACK_IMPORTED_MODULE_3__.unmountSingleStudent)());
+      dispatch((0,_store_errorReducer__WEBPACK_IMPORTED_MODULE_2__.clearError)());
     };
   }, []);
-  return error ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_NotFound__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  return error ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_NotFound__WEBPACK_IMPORTED_MODULE_4__["default"], {
     type: 'student'
   }) : student.firstName ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "single-student-container"
@@ -3380,13 +3371,13 @@ var SingleStudent = function SingleStudent() {
     className: "student-detail"
   }, student.gpa ? student.gpa : 'N/A')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
     className: "tag"
-  }, 'Campus: '), student.campusId && student.campus ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
+  }, 'Campus: '), student.campusId && student.campus ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Link, {
     to: "/campuses/".concat(student.campus.id)
   }, student.campus.name)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
     className: "student-detail"
   }, "Not enrolled")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "update-student-form"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_UpdateStudentForm__WEBPACK_IMPORTED_MODULE_6__["default"], null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...");
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_UpdateStudentForm__WEBPACK_IMPORTED_MODULE_5__["default"], null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...");
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SingleStudent);
@@ -3496,7 +3487,7 @@ var StudentFooter = function StudentFooter() {
   }, "Unregistered")));
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (StudentFooter); // add campus filtering now
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (StudentFooter);
 
 /***/ }),
 
@@ -3638,10 +3629,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
-/* harmony import */ var _store_campusesReducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/campusesReducer */ "./src/store/campusesReducer.js");
-/* harmony import */ var _store_singleStudentReducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/singleStudentReducer */ "./src/store/singleStudentReducer.js");
-/* harmony import */ var _store_studentsReducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../store/studentsReducer */ "./src/store/studentsReducer.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var _store_singleStudentReducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/singleStudentReducer */ "./src/store/singleStudentReducer.js");
+/* harmony import */ var _store_studentsReducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/studentsReducer */ "./src/store/studentsReducer.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -3666,10 +3656,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
 var UpdateStudentForm = function UpdateStudentForm() {
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
-  var params = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useParams)();
+  var params = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useParams)();
 
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_0___default().useState({
     firstName: '',
@@ -3689,19 +3678,14 @@ var UpdateStudentForm = function UpdateStudentForm() {
     return state.campuses;
   });
   react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
-    //duplicating code with SingleStudent component; probably unneccessary
-    //don't think I need to unmount though, since SingleStudent already taking care of that
     setForm(student);
-  }, []);
-  react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
-    dispatch((0,_store_campusesReducer__WEBPACK_IMPORTED_MODULE_2__.fetchCampuses)());
   }, []);
 
   var handleSubmit = function handleSubmit(event) {
     event.preventDefault();
     var selectedCampus = getSelectedCampus();
-    dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_4__.updateStudent)(form, selectedCampus));
-    dispatch((0,_store_singleStudentReducer__WEBPACK_IMPORTED_MODULE_3__.fetchSingleStudent)(params.id));
+    dispatch((0,_store_studentsReducer__WEBPACK_IMPORTED_MODULE_3__.updateStudent)(form, selectedCampus));
+    dispatch((0,_store_singleStudentReducer__WEBPACK_IMPORTED_MODULE_2__.fetchSingleStudent)(params.id));
   };
 
   var getSelectedCampus = function getSelectedCampus() {
@@ -4175,7 +4159,6 @@ var reducer = (0,redux__WEBPACK_IMPORTED_MODULE_8__.combineReducers)({
 });
 
 function configureStore() {
-  // return createStore(########, applyMiddleware(thunk));
   return (0,redux__WEBPACK_IMPORTED_MODULE_8__.createStore)(reducer, (0,redux__WEBPACK_IMPORTED_MODULE_8__.applyMiddleware)(redux_thunk__WEBPACK_IMPORTED_MODULE_9__["default"], (redux_logger__WEBPACK_IMPORTED_MODULE_0___default())));
 }
 
