@@ -9,7 +9,6 @@ router.get('/', async (req,res,next) => {
                 model: Student
             }
         });
-        console.log("Fetched campuses", campuses)
         res.send(campuses);
     } catch (err) {
         next(err)

@@ -336,11 +336,7 @@ h4 {
   cursor: pointer;
 }
 
-/*
-TODOS
-
-LOOK INTO SOME OF THE EXTRA CREDIT FUNCTIONALITY
-- for home page, could look into autoplaying carousel
-
-- THEN, FILTERING SHOULD BE AN OPTION. ORDERING OPTIONS COULD GO IN A FOOTER MAYBE? FILTER OPTIONS TOO
-*/
+/* gpa number input opacity */
+input[type=number]::-webkit-inner-spin-button {
+  opacity: 1;
+}

@@ -56,7 +56,7 @@ const NewStudentForm = () => {
     }
 
     const checkDisabled = () => {
-        return (!form.lastName.length || !form.firstName.length || !form.email.length)
+        return (!form.lastName.length || !form.firstName.length || !form.email.length || form.gpa < 0 || form.gpa > 4)
     }
 
     return(
@@ -84,7 +84,10 @@ const NewStudentForm = () => {
                 <label htmlFor='imageUrl'>Student Picture Url</label>
                 <input name='imageUrl' value ={form.imageUrl} type='url' onChange={handleChange('imageUrl')}/>
 
-                <label htmlFor='gpa'>GPA</label>
+                <label htmlFor='gpa'>
+                    GPA
+                    <span className='warning'>{(form.gpa < 0 || form.gpa > 4) ? 'GPA must be within 0.0-4.0' : ''}</span>
+                </label>
                 <input name='gpa' value={form.gpa} type='number' step='0.01' min='0.0' max='4.0' onChange={handleChange('gpa')}/>
 
                 <label htmlFor='campus'>Campus</label>

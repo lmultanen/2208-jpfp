@@ -3121,7 +3121,7 @@ var NewStudentForm = function NewStudentForm() {
   };
 
   var checkDisabled = function checkDisabled() {
-    return !form.lastName.length || !form.firstName.length || !form.email.length;
+    return !form.lastName.length || !form.firstName.length || !form.email.length || form.gpa < 0 || form.gpa > 4;
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -3163,7 +3163,9 @@ var NewStudentForm = function NewStudentForm() {
     onChange: handleChange('imageUrl')
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
     htmlFor: "gpa"
-  }, "GPA"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+  }, "GPA", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: "warning"
+  }, form.gpa < 0 || form.gpa > 4 ? 'GPA must be within 0.0-4.0' : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     name: "gpa",
     value: form.gpa,
     type: "number",
@@ -3721,7 +3723,7 @@ var UpdateStudentForm = function UpdateStudentForm() {
   };
 
   var checkDisabled = function checkDisabled() {
-    return !form.lastName.length || !form.firstName.length || !form.email.length;
+    return !form.lastName.length || !form.firstName.length || !form.email.length || form.gpa < 0 || form.gpa > 4;
   };
 
   return student.firstName ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -3763,7 +3765,9 @@ var UpdateStudentForm = function UpdateStudentForm() {
     onChange: handleChange('imageUrl')
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
     htmlFor: "gpa"
-  }, "GPA"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+  }, "GPA", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: "warning"
+  }, form.gpa < 0 || form.gpa > 4 ? 'GPA must be within 0.0-4.0' : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     name: "gpa",
     value: form.gpa,
     type: "number",
