@@ -54,7 +54,7 @@ const AllCampuses = () => {
                         )
                     })
                     : 
-                    (campuses.length === 0 && loaded) ?
+                    loaded ?
                     <div>No campuses to display</div> :
                     <div>Loading...</div>
                 }

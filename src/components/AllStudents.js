@@ -53,7 +53,7 @@ const AllStudents = () => {
                             )
                         })
                         :
-                        (students.length === 0 && loaded) ?
+                        loaded ?
                         <div>No students to display</div> :
                         <div>Loading...</div>
                     }
